@@ -182,12 +182,13 @@ Route::prefix('admin')->middleware(['auth','Localization'])->group(function () {
     Route::group(['prefix'=>'users','namespace'=>'User'],function()
         {
             Route::get('/', 'UserController@index')->name('admin.user');
-            Route::post('/{id}', 'UserController@changepassword')->name('admin.user.changepassword');
             Route::get('/create', 'UserController@create')->name('admin.user.create');
-            Route::post('/create', 'UserController@store')->name('admin.user.store');
+            Route::post('/create','UserController@store')->name('admin.user.store');
             Route::get('/edit/{id}', 'UserController@edit')->name('admin.user.edit');
             Route::post('/edit/{id}', 'UserController@update')->name('admin.user.update');
             Route::delete('/destroy/{id}', 'UserController@destroy')->name('admin.user.destroy');
+            Route::post('/{id}', 'UserController@changepassword')->name('admin.user.changepassword');
+
         });
     //  Manage Role
     Route::group(['prefix'=>'roles','namespace'=>'Role'],function()

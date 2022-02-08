@@ -4,14 +4,10 @@ namespace App\Repositories;
 
 use App\Http\Requests\Portfolio\PortfolioRequest;
 use App\Models\Pcategory\Pcategory;
-use App\Models\Pcategory\PcategoryTranslation;
 use App\Models\Portfolio\Portfolio;
 use App\Models\Portfolio\PortfolioTranslation;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use App\Repositories\Interfaces\PortfolioRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 

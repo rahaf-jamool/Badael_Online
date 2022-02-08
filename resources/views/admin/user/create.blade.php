@@ -117,7 +117,7 @@
 
                     <div class="checkbox">
 
-                        <label><input type="checkbox" name="role[]" value="{{ $role->id }}"> {{ $role->name }} </label>
+                        <label><input type="checkbox" name="roles[]" value="{{ $role->id }}"> {{ $role->name }} </label>
 
                     </div>
 

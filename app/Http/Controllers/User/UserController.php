@@ -4,107 +4,90 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 // use App\Http\Requests\User\UserRequest;
-// use App\Service\User\UserService;
+use App\Service\User\UserService;
 use App\Models\User\User;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // private $userService;
-    // public function __construct(UserService $userService)
-    // {
-    //     $this->userService=$userService;
-    // }
+    private $userService;
+    public function __construct(UserService $userService)
+    {
+        $this->userService=$userService;
+    }
 
     public function index()
     {
-        $users = User::latest()->get();
-        $users->transform(function($user){
-            $user->role = $user->roles()->first();
-            return $user;
-        });
+        $users = $this->userService->index();
+
         return view('admin.user.index',[
             'user' => $users,
         ]);
-        // return $this->userService->index();
     }
 
     public function create(){
-        $roles = Role::all();
-       return view ('admin.user.create',compact('roles'));
-        // return $this->userService->create();
+        $roles = $this->userService->create();
+        return view ('admin.user.create',compact('roles'));
+
     }
 
-    public function store(){
-        return 'ok';
+    public function store(Request $request){
+        try{
+            $this->userService->store($request);
 
+            return redirect()->route('admin.user')->with('success', 'Data added successfully');
 
-        // $user = new User();
-        // $user->name = $request->name;
-        // $user->email = $request->email;
-        // $user->password = Hash::make($request->password);
-
-        // if ($user->save()) {
-        //     return redirect()->route('admin.user')->with('success', 'Data added successfully');
-        // }else {
-
-        //     return redirect()->route('admin.user.create')->with('error', 'Data failed to add');
-
-        //    }
-        // return $this->userService->store($request);
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.user.create')->with('error', 'Data failed to add');
+        }
     }
 
     public function show($id){
-        // return $this->userService->show($id);
+        return $this->userService->show($id);
     }
 
     public function edit($id){
-        // return $this->userService->edit($id);
-        $user = User::findOrFail($id);
-        return view('admin.user.edit',[
-            'user' => $user
-        ]);
+        return $this->userService->edit($id);
     }
 
     public function update(Request $request, $id){
-        // return $this->userService->update($request, $id);
         try{
-            // return $request->all();
-            $user = User::findOrFail($id);
-            $user->name = $request->name;
-            $user->email = $request->email;
+            $this->userService->update($request, $id);
 
             return redirect()->route('admin.user')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
+            DB::rollback();
             return $ex->getMessage();
             return redirect()->route('admin.user.edit')->with('error', 'Data failed to update');
         }
     }
 
     public function changepassword(Request $request, $id){
-        // return $this->userService->changepassword($id,$request);
-        $user = User::findOrFail($id);
-        $user->password = Hash::make($request->password);
-
-        if ( $user->save()) {
-
+        try{
+            $this->userService->changepassword($request,$id);
             return redirect()->route('admin.user')->with('success', 'Password updated successfully');
 
-           } else {
-
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.user')->with('error', 'Password failed to update');
-
-           }
+        }
     }
 
     public function destroy($id){
-        // return $this->userService->destroy($id);
-        $user = User::findOrFail($id);
+        try{
+            $this->userService->destroy($id);
+            return redirect()->route('admin.user')->with('success', 'Data deleted successfully');
 
-        $user->delete();
-
-        return redirect()->route('admin.user')->with('success', 'Data deleted successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.user')->with('error', 'Data deleted failed');
+        }
     }
 }

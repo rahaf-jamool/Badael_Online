@@ -3,115 +3,78 @@
 namespace App\Http\Controllers\Permission;
 
 use App\Models\Permission;
+use App\Service\Permission\PermissionService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 
 class PermissionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $permissionService;
+    public function __construct(PermissionService $permissionService)
+    {
+        $this->permissionService=$permissionService;
+    }
+
     public function index()
     {
-        $permissions = Permission::all();
+        $permissions = $this->permissionService->index();
         return view('admin.permission.index',compact('permissions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        $this->permissionService->create();
         return view('admin.permission.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name' => 'required|string|max:50|unique:permissions'
-        ]);
+        try{
 
-        $permission= new Permission();
-        $permission->name = $request->name;
-        $permission->slug = Str::slug($request->name);
-        $permission->save();
+            $this->permissionService->store($request);
+            return redirect()->route('admin.permission')->with('success', 'Data added successfully');
 
-        return redirect(route('admin.permission'));
+        }catch(\Exception $ex){
+            return $ex->getMessage();
+            return redirect()->route('admin.permission.create')->with('error', 'Data failed to add');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        return $this->permissionService->show($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $permission = Permission::findOrFail($id);
+        $permission = $this->permissionService->edit($id);
         return view('admin.permission.edit',compact('permission'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name' => 'required|max:50'
-        ]);
-        $permission = Permission::findOrFail($id);
-        $permission->name = $request->name;
+        try{
 
-        if ( $permission->save()) {
+            $this->permissionService->update($request,$id);
+            return redirect()->route('admin.permission')->with('success', 'Data added successfully');
 
-            return redirect()->route('admin.permission')->with('success', 'Data updated successfully');
-
-           } else {
-
-            return redirect()->route('admin.permission.edit')->with('error', 'Data failed to update');
-
-           }
+        }catch(\Exception $ex){
+            return $ex->getMessage();
+            return redirect()->route('admin.permission.create')->with('error', 'Data failed to add');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $permission = Permission::findOrFail($id);
+    public function destroy($id){
+        try{
+            $this->permissionService->destroy($id);
+            return redirect()->route('admin.permission')->with('success', 'Data deleted successfully');
 
-        $permission->delete();
-
-        return redirect()->route('admin.permission')->with('success', 'Data deleted successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.permission')->with('error', 'Data deleted failed');
+        }
     }
 }

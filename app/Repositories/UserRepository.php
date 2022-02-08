@@ -2,63 +2,54 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\User\UserRequest;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Models\Role;
 use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository implements UserRepositoryInterface{
 
+    private $user;
+    private $role;
+    public function __construct(User $user,Role $role)
+    {
+        $this->user = $user;
+        $this->role = $role;
+    }
+
     public function index()
     {
-        $users = User::latest()->get();
+        $users = $this->user->latest()->get();
         $users->transform(function($user){
             $user->role = $user->roles()->first();
             return $user;
         });
-        return view('admin.user.index',[
-            'user' => $users,
-        ]);
+        return $users;
     }
 
     public function create()
     {
-        
-        $roles = Role::all();
-       return view ('admin.user.create',compact('roles'));
+        return $this->role->all();
     }
 
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
+        DB::beginTransaction();
 
-        try{
-            return $request->all();
-            $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
+        $user= $this->user->create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' =>Hash::make($request->password)
+        ]);
 
-            return redirect()->route('admin.user')->with('success', 'Data added successfully');
-        }catch(\Exception $ex){
-            // DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.user.create')->with('error', 'Data failed to add');
+        if ($request->has('roles')) {
+            $role = $this->user->find($user->id);
+            $role->roles()->syncWithoutDetaching($request->get('roles'));
         }
-        // $user = new User();
-        // $user->name = $request->name;
-        // $user->email = $request->email;
-        // $user->password = Hash::make($request->password);
 
-        // if ($user->save()) {
-        //     return redirect()->route('admin.user')->with('success', 'Data added successfully');
-        // }else {
-
-        //     return redirect()->route('admin.user.create')->with('error', 'Data failed to add');
-
-        //    }
+        DB::commit();
     }
 
     public function show($id)
@@ -68,51 +59,43 @@ class UserRepository implements UserRepositoryInterface{
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->user->findOrFail($id);
+        $roles = $this->role->all();
         return view('admin.user.edit',[
-            'user' => $user
+            'user' => $user,
+            'roles' => $roles
         ]);
     }
 
-    public function update(UserRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $users= $this->user->find($id);
 
-        if ( $user->save()) {
+        DB::beginTransaction();
 
-            return redirect()->route('admin.user')->with('success', 'Data updated successfully');
+        $users->where('users.id',$id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' =>Hash::make($request->password)
+        ]);
 
-           } else {
+        if ($request->has('roles')) {
+            $role = $this->user->find($users->id);
+            $role->roles()->syncWithoutDetaching($request->get('roles'));
+        }
 
-            return redirect()->route('admin.user.edit')->with('error', 'Data failed to update');
-
-           }
+        DB::commit();
     }
 
-    public function changepassword(UserRequest $request, $id)
+    public function changepassword(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->user->findOrFail($id);
         $user->password = Hash::make($request->password);
-
-        if ( $user->save()) {
-
-            return redirect()->route('admin.user')->with('success', 'Password updated successfully');
-
-           } else {
-
-            return redirect()->route('admin.user')->with('error', 'Password failed to update');
-
-           }
     }
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-
+        $user = $this->user->findOrFail($id);
         $user->delete();
-
-        return redirect()->route('admin.user')->with('success', 'Data deleted successfully');
     }
 }

@@ -25,7 +25,7 @@ class PortfolioRequest extends FormRequest
     {
         return [
             'portfolio.*.name'=>'required',
-            'category'=>'required|array',
+            'category'=>'required',
             'mobileImage'=>'required',
             'cover'=>'required',
             'date'=>'required',
@@ -37,9 +37,9 @@ class PortfolioRequest extends FormRequest
     {
         return [
 
-            'required'=>'this field is required',
+            // 'required'=>'this field is required',
             'portfolio.*.desc.min' => 'Your Portfolio\'s description  Is Too Short',
-            'category.array' => 'Your Portfolio\'s pcategory is required array',
+            // 'category.array' => 'Your Portfolio\'s pcategory is required array',
             'category.required' => 'Your Portfolio\'s pcategory is required',
             'portfolio.*.name.required' => 'the name is required',
             'portfolio.*.desc.required' => 'the description is required',

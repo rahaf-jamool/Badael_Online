@@ -2,10 +2,8 @@
 
 namespace App\Manager\User;
 
-use App\Http\Requests\User\UserRequest;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
-
 class UserManager
 {
     private $userRepository;
@@ -22,7 +20,7 @@ class UserManager
         return $this->userRepository->create();
     }
 
-    public function store(UserRequest $request){
+    public function store(Request $request){
         return $this->userRepository->store($request);
     }
 
@@ -34,12 +32,12 @@ class UserManager
         return $this->userRepository->edit($id);
     }
 
-    public function update(UserRequest $request, $id){
-        return $this->userRepository->update($id,$request);
+    public function update(Request $request, $id){
+        return $this->userRepository->update($request,$id);
     }
 
-    public function changepassword(UserRequest $request, $id){
-        return $this->userRepository->changepassword($id,$request);
+    public function changepassword(Request $request, $id){
+        return $this->userRepository->changepassword($request,$id);
     }
 
     public function destroy($id){

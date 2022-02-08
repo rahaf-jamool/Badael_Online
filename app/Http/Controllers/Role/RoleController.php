@@ -3,119 +3,81 @@
 namespace App\Http\Controllers\Role;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Role\RoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Service\Role\RoleService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $roleService;
+    public function __construct(RoleService $roleService)
+    {
+        $this->roleService=$roleService;
+    }
+
     public function index()
     {
-        $roles = Role::all();
+        $roles = $this->roleService->index();
         return view('admin.role.index',compact('roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $permissions = Permission::all();
+        $permissions = $this->roleService->create();
         return view('admin.role.create',compact('permissions'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(RoleRequest $request)
+    public function store(Request $request)
     {
-        $request->validated();
+        try{
 
-        $role = new Role();
-        $role->name = $request->name;
-        $role->slug = Str::slug($request->name);
-        $role->save();
+            $this->roleService->store($request);
+            return redirect()->route('admin.role')->with('success', 'Data added successfully');
 
-        $role->permissions()->sync($request->permissions);
+        }catch(\Exception $ex){
 
-        return redirect(route('admin.role'));
+            return $ex->getMessage();
+            return redirect()->route('admin.role.create')->with('error', 'Data failed to add');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+       return $this->roleService->show($id);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $role = Role::findOrFail($id);
-        $permissions = Permission::all();
-        return view('admin.role.edit',compact('role','permissions'));
+       return $this->roleService->edit($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(RoleRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $request->validated();
+        try{
 
-        $role = Role::findOrFail($id);
-        $role->name = $request->name;
+            $this->roleService->update($request,$id);
+            return redirect()->route('admin.role')->with('success', 'Data added successfully');
 
-        $role->permissions()->sync($request->permissions);
+        }catch(\Exception $ex){
 
-        if ( $role->save()) {
-
-            return redirect()->route('admin.role')->with('success', 'Data updated successfully');
-
-           } else {
-
+            return $ex->getMessage();
             return redirect()->route('admin.role.edit')->with('error', 'Data failed to update');
-
-           }
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $role = Role::findOrFail($id);
+        try{
+            $this->roleService->destroy($id);
+            return redirect()->route('admin.role')->with('success', 'Data deleted successfully');
 
-        $role->delete();
-
-        return redirect()->route('admin.role')->with('success', 'Data deleted successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.role')->with('error', 'Data deleted failed');
+        }
     }
 }

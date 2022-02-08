@@ -9,6 +9,12 @@ class Role extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'slug',
+        'guard_name',
+    ];
+
     public function users()
     {
         return $this->belongsToMany(User::class,'users_roles','user_id', 'role_id','id','id');

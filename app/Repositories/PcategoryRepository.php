@@ -2,68 +2,59 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\PCategory\PCategoryRequest;
 use App\Models\Pcategory\Pcategory;
 use App\Models\Pcategory\PcategoryTranslation;
-use App\Repositories\Interfaces\PcategoryRepositoryInterface;
+use App\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
-class PcategoryRepository implements PcategoryRepositoryInterface{
+class PcategoryRepository implements RepositoryInterface{
 
-    private $request;
     private $pcategory;
     private $pcategoryTranslation;
-    public function __construct(Pcategory $pcategory, PcategoryTranslation $pcategoryTranslation, Request $request)
+    public function __construct(Pcategory $pcategory, PcategoryTranslation $pcategoryTranslation)
     {
-        $this->request = $request;
         $this->pcategory = $pcategory;
         $this->pcategoryTranslation = $pcategoryTranslation;
     }
 
     public function index()
     {
-        $pcategory = $this->pcategory::orderBy('id','desc')->get();
-
-        return view('admin.pcategory.index',compact('pcategory'));
+        return $this->pcategory->orderBy('id','desc')->get();
     }
 
-    public function store(PCategoryRequest $request)
+    public function create()
     {
-        try{
-            /** transformation to collection */
-            $allpcategories = collect($request->pcategory)->all();
 
-            $request->is_active ? $is_active = true : $is_active = false;
+    }
 
-            DB::beginTransaction();
-            // create the default language's banner
-            $unTransPcategory_id = $this->pcategory->insertGetId([
-                'is_active' => $request->is_active = 1
-            ]);
+    public function store(Request $request)
+    {
+        /** transformation to collection */
+        $allpcategories = collect($request->pcategory)->all();
 
-            // check the Category and request
-            if(isset($allpcategories) && count($allpcategories)){
-                // insert other translation for Categories
-                foreach ($allpcategories as $allpcategory){
-                    $transPcategory_arr[] = [
-                        'name' => $allpcategory ['name'],
-                        'local' => $allpcategory['local'],
-                        'pcategory_id' => $unTransPcategory_id
-                    ];
-                }
+        $request->is_active ? $is_active = true : $is_active = false;
 
-                $this->pcategoryTranslation->insert($transPcategory_arr);
+        DB::beginTransaction();
+        // create the default language's banner
+        $unTransPcategory_id = $this->pcategory->insertGetId([
+            'is_active' => $request->is_active = 1
+        ]);
+
+        // check the Category and request
+        if(isset($allpcategories) && count($allpcategories)){
+            // insert other translation for Categories
+            foreach ($allpcategories as $allpcategory){
+                $transPcategory_arr[] = [
+                    'name' => $allpcategory ['name'],
+                    'local' => $allpcategory['local'],
+                    'pcategory_id' => $unTransPcategory_id
+                ];
             }
-            DB::commit();
 
-            return redirect()->route('admin.pcategory')->with('success', 'Data added successfully');
-        }catch(\Exception $ex){
-            DB::rollback();
-            // return $ex->getMessage();
-            return redirect()->route('admin.pcategory')->with('error', 'Data failed to add');
+            $this->pcategoryTranslation->insert($transPcategory_arr);
         }
+        DB::commit();
     }
 
     public function show($id)
@@ -73,16 +64,12 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
 
     public function edit($id)
     {
-        $pcategory = $this->pcategory::findOrFail($id);
-
-        return view('admin.pcategory.edit',compact('pcategory'));
+        return $this->pcategory::findOrFail($id);
     }
 
-    public function update(PCategoryRequest $request,$id)
+    public function update(Request $request,$id)
     {
-        try{
-
-            $pcategory = $this->pcategory::findOrFail($id);
+        $pcategory = $this->pcategory::findOrFail($id);
 
             DB::beginTransaction();
 
@@ -102,19 +89,11 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
                     ]);
                 }
                 DB::commit();
-                return redirect()->route('admin.pcategory')->with('success', 'Data updated successfully');
-        }catch(\Exception $ex){
-            DB::rollback();
-            // return $ex->getMessage();
-            return redirect()->route('admin.pcategory.create')->with('error', 'Data failed to update');
-        }
     }
 
     public function destroy($id)
     {
         $pcategory = $this->pcategory::findOrFail($id);
         $pcategory->delete();
-
-        return redirect()->route('admin.pcategory')->with('success', 'Data deleted successfully');
     }
 }

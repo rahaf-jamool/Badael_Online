@@ -2,38 +2,38 @@
 
 namespace App\Manager\Pcategory;
 
-use App\Http\Requests\PCategory\PCategoryRequest;
-use App\Repositories\Interfaces\PcategoryRepositoryInterface;
+use App\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Http\Request;
+use App\Models\Pcategory\Pcategory;
 
 class PcategoryManager
 {
-    private $pcategoryRepository;
-    public function __construct(PcategoryRepositoryInterface $pcategoryRepository)
+    private $repository;
+    public function __construct(RepositoryInterface $repository)
     {
-        $this->pcategoryRepository=$pcategoryRepository;
+        $this->repository=$repository;
     }
     public function index(){
-        return $this->pcategoryRepository->index();
+        return $this->repository->index();
     }
 
-    public function store(PCategoryRequest $request){
-        return $this->pcategoryRepository->store($request);
+    public function store(Request $request){
+        return $this->repository->store($request);
     }
 
     public function show($id){
-        return $this->pcategoryRepository->show($id);
+        return $this->repository->show($id);
     }
 
     public function edit($id){
-        return $this->pcategoryRepository->edit($id);
+        return $this->repository->edit($id);
     }
 
-    public function update(PCategoryRequest $request,$id){
-        return $this->pcategoryRepository->update($request,$id);
+    public function update(Request $request,$id){
+        return $this->repository->update($request,$id);
     }
 
     public function destroy($id){
-        return $this->pcategoryRepository->destroy($id);
+        return $this->repository->destroy($id);
     }
 }

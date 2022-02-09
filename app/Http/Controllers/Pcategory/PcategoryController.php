@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Pcategory;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PCategory\PCategoryRequest;
 use App\Service\Pcategory\PcategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PCategoryController extends Controller
 {
@@ -15,11 +15,21 @@ class PCategoryController extends Controller
         $this->pcategoryService=$pcategoryService;
     }
     public function index(){
-        return $this->pcategoryService->index();
+        $pcategory = $this->pcategoryService->index();
+        return view('admin.pcategory.index',compact('pcategory'));
     }
 
-    public function store(PCategoryRequest $request){
-        return $this->pcategoryService->store($request);
+    public function store(Request $request){
+        try{
+
+            $this->pcategoryService->store($request);
+            return redirect()->route('admin.pcategory')->with('success', 'Data added successfully');
+
+        }catch(\Exception $ex){
+            DB::rollback();
+            // return $ex->getMessage();
+            return redirect()->route('admin.pcategory')->with('error', 'Data failed to add');
+        }
     }
 
     public function show($id){
@@ -27,14 +37,30 @@ class PCategoryController extends Controller
     }
 
     public function edit($id){
-        return $this->pcategoryService->edit($id);
+        $pcategory = $this->pcategoryService->edit($id);
+        return view('admin.pcategory.edit',compact('pcategory'));
     }
 
-    public function update(PCategoryRequest $request,$id){
-        return $this->pcategoryService->update($request,$id);
+    public function update(Request $request,$id){
+        try{
+            $this->pcategoryService->update($request,$id);
+            return redirect()->route('admin.pcategory')->with('success', 'Data updated successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            // return $ex->getMessage();
+            return redirect()->route('admin.pcategory.create')->with('error', 'Data failed to update');
+        }
     }
 
     public function destroy($id){
-        return $this->pcategoryService->destroy($id);
+        try{
+            $this->pcategoryService->destroy($id);
+            return redirect()->route('admin.pcategory')->with('success', 'Data deleted successfully');
+
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.pcategory')->with('error', 'Data deleted failed');
+        }
     }
 }

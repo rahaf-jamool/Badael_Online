@@ -2,7 +2,6 @@
 
 namespace App\Service\Pcategory;
 
-use App\Http\Requests\PCategory\PCategoryRequest;
 use App\Manager\Pcategory\PcategoryManager;
 use Illuminate\Http\Request;
 
@@ -17,7 +16,7 @@ class  PcategoryService
         return $this->pcategoryManager->index();
     }
 
-    public function store(PCategoryRequest $request){
+    public function store(Request $request){
         return $this->pcategoryManager->store($request);
     }
 
@@ -29,7 +28,7 @@ class  PcategoryService
         return $this->pcategoryManager->edit($id);
     }
 
-    public function update(PCategoryRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->pcategoryManager->update($request,$id);
     }
 

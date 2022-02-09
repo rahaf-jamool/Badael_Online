@@ -141,105 +141,105 @@
         {{-- name --}}
         <div class="form-group ml-2 col-sm-7">
             <div class="rowInput">
-    
+
                 <div class="en col-sm-9">
                     <label class="col-sm-6 col-form-label">{{ __('portfolio.Nenglish') }}</label>
 
                     <input type="text" name='portfolio[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $portfolio->name}}" id="name">
                     <input type="text" name='portfolio[en][local]' value='en' hidden>
-    
+
                     @error('portfolio.en.name')
                         <small class="form-text text-danger"> {{ $message }}</small>
                     @enderror
                 </div>
-    
+
                 <div class="ar col-sm-9">
                     <label class="col-sm-6 col-form-label">{{ __('portfolio.Narabic') }}</label>
 
                     <input type="text" name='portfolio[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $portfolio->name}}" id="name">
                     <input type="text" name='portfolio[ar][local]' value='ar' hidden>
-    
+
                     @error('portfolio.ar.name')
                         <small class="form-text text-danger"> {{ $message }}</small>
                     @enderror
                 </div>
-    
+
                 <select class="form-control col-sm-2 selectLang" id="selectLang">
                     @foreach(config('app.languages') as $index => $lang)
                     <option id="lang">{{ $lang }}</option>
                     @endforeach
                 </select>
-    
+
             </div>
         </div>
 
         {{-- client --}}
         <div class="form-group ml-2 col-sm-7">
             <div class="rowInput">
-    
+
                 <div class="en col-sm-9">
                     <label class="col-sm-6 col-form-label">{{ __('portfolio.Cenglish') }}</label>
 
                     <input type="text" name='portfolio[en][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client') ? old('client') : $portfolio->client}}" id="client">
                     <input type="text" name='portfolio[en][local]' value='en' hidden>
-    
+
                     @error('portfolio.en.client')
                         <small class="form-text text-danger"> {{ $message }}</small>
                     @enderror
                 </div>
-    
+
                 <div class="ar col-sm-9">
                     <label class="col-sm-6 col-form-label">{{ __('portfolio.Carabic') }}</label>
 
                     <input type="text" name='portfolio[ar][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client') ? old('client') : $portfolio->client}}" id="client">
                     <input type="text" name='portfolio[ar][local]' value='ar' hidden>
-    
+
                     @error('portfolio.ar.client')
                         <small class="form-text text-danger"> {{ $message }}</small>
                     @enderror
                 </div>
-    
+
                 <select class="form-control col-sm-2 selectLang" id="selectLang">
                     @foreach(config('app.languages') as $index => $lang)
                     <option id="lang">{{ $lang }}</option>
                     @endforeach
                 </select>
-    
+
             </div>
         </div>
 
         {{-- desc --}}
         <div class="form-group ml-2 col-sm-7">
             <div class="rowInput">
-    
+
                 <div class="en col-sm-9">
                     <label class="col-sm-6 col-form-label">{{ __('portfolio.Denglish') }}</label>
 
                     <textarea name="portfolio[en][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc') ? old('desc') : $portfolio->desc}}</textarea>
                     <input type="text" name='portfolio[en][local]' value='en' hidden>
-    
+
                     @error('portfolio.en.desc')
                         <small class="form-text text-danger"> {{ $message }}</small>
                     @enderror
                 </div>
-    
+
                 <div class="ar col-sm-9">
                     <label class="col-sm-6 col-form-label">{{ __('portfolio.Darabic') }}</label>
 
                     <textarea name="portfolio[ar][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc') ? old('desc') : $portfolio->desc}}</textarea>
                     <input type="text" name='portfolio[ar][local]' value='ar' hidden>
-    
+
                     @error('portfolio.ar.desc')
                         <small class="form-text text-danger"> {{ $message }}</small>
                     @enderror
                 </div>
-    
+
                 <select class="form-control col-sm-2 selectLang" id="selectLang">
                     @foreach(config('app.languages') as $index => $lang)
                     <option id="lang">{{ $lang }}</option>
                     @endforeach
                 </select>
-    
+
             </div>
         </div>
 

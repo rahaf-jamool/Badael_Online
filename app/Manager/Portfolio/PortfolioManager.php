@@ -2,42 +2,41 @@
 
 namespace App\Manager\Portfolio;
 
-use App\Http\Requests\Portfolio\PortfolioRequest;
-use App\Repositories\Interfaces\PortfolioRepositoryInterface;
+use App\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Http\Request;
 
 class PortfolioManager
 {
-    private $portfolioRepository;
-    public function __construct(PortfolioRepositoryInterface $portfolioRepository)
+    private $repository;
+    public function __construct(RepositoryInterface $repository)
     {
-        $this->portfolioRepository=$portfolioRepository;
+        $this->repository=$repository;
     }
     public function index(){
-        return $this->portfolioRepository->index();
+        return $this->repository->index();
     }
 
     public function create(){
-        return $this->portfolioRepository->create();
+        return $this->repository->create();
     }
 
-    public function store(PortfolioRequest $request){
-        return $this->portfolioRepository->store($request);
+    public function store(Request $request){
+        return $this->repository->store($request);
     }
 
     public function show($id){
-        return $this->portfolioRepository->show($id);
+        return $this->repository->show($id);
     }
 
     public function edit($id){
-        return $this->portfolioRepository->edit($id);
+        return $this->repository->edit($id);
     }
 
-    public function update(PortfolioRequest $request,$id){
-        return $this->portfolioRepository->update($request,$id);
+    public function update(Request $request,$id){
+        return $this->repository->update($request,$id);
     }
 
     public function destroy($id){
-        return $this->portfolioRepository->destroy($id);
+        return $this->repository->destroy($id);
     }
 }

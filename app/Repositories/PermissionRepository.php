@@ -3,18 +3,15 @@
 namespace App\Repositories;
 
 use App\Repositories\Interfaces\RepositoryInterface;
-use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PermissionRepository implements RepositoryInterface{
 
-    private $role;
     private $permission;
-    public function __construct(Role $role,Permission $permission)
+    public function __construct(Permission $permission)
     {
-        $this->role = $role;
         $this->permission = $permission;
     }
 
@@ -54,18 +51,18 @@ class PermissionRepository implements RepositoryInterface{
 
     public function update(Request $request, $id)
     {
-            $slug= $request->name;
+        $slug= $request->name;
 
-            $permission = $this->permission::find($id);
+        $permission = $this->permission::find($id);
 
-            DB::beginTransaction();
+        DB::beginTransaction();
 
-            $permission->where('permissions.id',$id)->update([
-                'name' => $request->name,
-                'slug' => $slug,
-            ]);
+        $permission->where('permissions.id',$id)->update([
+            'name' => $request->name,
+            'slug' => $slug,
+        ]);
 
-            DB::commit();
+        DB::commit();
     }
 
     public function destroy($id)

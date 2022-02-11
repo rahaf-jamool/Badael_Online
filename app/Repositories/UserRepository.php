@@ -12,26 +12,22 @@ use Illuminate\Support\Facades\DB;
 class UserRepository implements UserRepositoryInterface{
 
     private $user;
-    private $role;
-    public function __construct(User $user,Role $role)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->role = $role;
+    }
+
+    public function dashboard(){
+        return $this->user::count();
     }
 
     public function index()
     {
-        $users = $this->user->latest()->get();
-        $users->transform(function($user){
-            $user->role = $user->roles()->first();
-            return $user;
-        });
-        return $users;
+        return $this->user->latest()->get();
     }
 
     public function create()
     {
-        return $this->role->all();
     }
 
     public function store(Request $request)
@@ -44,11 +40,6 @@ class UserRepository implements UserRepositoryInterface{
             'password' =>Hash::make($request->password)
         ]);
 
-        if ($request->has('roles')) {
-            $role = $this->user->find($user->id);
-            $role->roles()->syncWithoutDetaching($request->get('roles'));
-        }
-
         DB::commit();
     }
 
@@ -59,12 +50,7 @@ class UserRepository implements UserRepositoryInterface{
 
     public function edit($id)
     {
-        $user = $this->user->findOrFail($id);
-        $roles = $this->role->all();
-        return view('admin.user.edit',[
-            'user' => $user,
-            'roles' => $roles
-        ]);
+        return $this->user->findOrFail($id);
     }
 
     public function update(Request $request, $id)
@@ -78,11 +64,6 @@ class UserRepository implements UserRepositoryInterface{
             'email' => $request->email,
             'password' =>Hash::make($request->password)
         ]);
-
-        if ($request->has('roles')) {
-            $role = $this->user->find($users->id);
-            $role->roles()->syncWithoutDetaching($request->get('roles'));
-        }
 
         DB::commit();
     }

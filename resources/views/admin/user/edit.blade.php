@@ -49,40 +49,6 @@
 
         </div>
 
-         {{-- role --}}
-
-         <div class="form-group ml-5">
-
-            <label class="col-sm-2 col-form-label">{{ __('user.roles') }}</label>
-
-            <div class="col-sm-9 row">
-
-                @foreach ($roles as $role)
-
-                <div class="col-lg-3">
-
-                    <div class="checkbox">
-
-                        <label><input type="checkbox" name="roles[]"
-                             value="{{ $role->id }}"
-                            @foreach ($user->roles as $role_premit)
-                                @if ($role_premit->id == $role->id)
-                                    checked
-                                @endif
-                            @endforeach
-                        > {{ $role->name }} </label>
-
-                    </div>
-
-                </div>
-
-                @endforeach
-
-
-            </div>
-
-        </div>
-
         <div class="form-group ml-5">
 
             <div class="col-sm-3">

@@ -2,11 +2,12 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\Http\Requests\User\UserRequest;
 use Illuminate\Http\Request;
 
 interface UserRepositoryInterface{
-    
+
+    public function dashboard();
+
     public function index();
 
     public function create();

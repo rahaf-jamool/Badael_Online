@@ -19,6 +19,11 @@ class UserController extends Controller
         $this->userService=$userService;
     }
 
+    public function dashboard(){
+        $admin = $this->userService->dashboard();
+        return view ('admin.dashboard', compact('admin'));
+    }
+
     public function index()
     {
         $users = $this->userService->index();
@@ -52,7 +57,10 @@ class UserController extends Controller
     }
 
     public function edit($id){
-        return $this->userService->edit($id);
+        $user = $this->userService->edit($id);
+        return view('admin.user.edit',[
+            'user' => $user,
+        ]);
     }
 
     public function update(Request $request, $id){

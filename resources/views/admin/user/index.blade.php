@@ -48,8 +48,6 @@
 
                         <th>{{ __('user.email') }}</th>
 
-                        <th>{{ __('user.roles') }}</th>
-
                         <th>{{ __('user.option') }}</th>
 
                     </tr>
@@ -73,8 +71,6 @@
                         <td>{{ $user->name }}</td>
 
                         <td>{{ $user->email }}</td>
-
-                        <td>{{ $user->role->name }}</td>
 
                         <td>
 

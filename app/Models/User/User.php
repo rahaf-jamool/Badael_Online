@@ -2,7 +2,6 @@
 
 namespace App\Models\User;
 
-use App\Models\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,16 +31,5 @@ class User extends Authenticatable
         'password',
         // 'remember_token',
     ];
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'users_roles', 'user_id', 'role_id','id','id');
-
-    }
-
-    public function getIsAdminAttribute()
-    {
-        return $this->roles()->where('id', 1)->exists();
-    }
 
 }

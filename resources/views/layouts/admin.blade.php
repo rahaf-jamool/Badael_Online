@@ -68,43 +68,9 @@
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{ route('admin.user') }}">{{ __('home.user') }}</a>
-            <a class="collapse-item" href="{{ route('admin.role') }}">{{ __('home.role') }}</a>
-            <a class="collapse-item" href="{{ route('admin.permission') }}">{{ __('home.permission') }}</a>
           </div>
         </div>
       </li>
-
-      {{-- <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.user') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Admin</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.role') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Roles</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.permission') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Permissions</span></a>
-      </li> --}}
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      {{-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-table"></i>
-          <span>{{ __('home.blog') }}</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('admin.post') }}">{{ __('home.blog') }}</a>
-            <a class="collapse-item" href="{{ route('admin.category') }}">{{ __('home.cate') }}</a>
-            <a class="collapse-item" href="{{ route('admin.tag') }}">{{ __('home.tag') }}</a>
-            <a class="collapse-item" href="{{ route('admin.post.trash') }}">{{ __('home.trash') }}</a>
-          </div>
-        </div>
-      </li> --}}
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -116,65 +82,6 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{ route('admin.portfolio') }}">{{ __('home.portfolio') }}</a>
             <a class="collapse-item" href="{{ route('admin.pcategory') }}">{{ __('home.portfoliocate') }}</a>
-          </div>
-        </div>
-      </li>
-
-      {{-- <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.faq') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>{{ __('home.faq') }}</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.link') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>{{ __('home.link') }}</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.page') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>{{ __('home.page') }}</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.partner') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>{{ __('home.partner') }}</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.service') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>{{ __('home.service') }}</span></a>
-      </li>
-
-      @can('team-list')
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.team') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>{{ __('home.team') }}</span></a>
-      </li>
-      @endcan
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.testi') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>{{ __('home.testi') }}</span></a>
-      </li> --}}
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>{{ __('home.setting') }}</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('admin.about') }}">{{ __('home.about') }}</a>
-            {{-- <a class="collapse-item" href="{{ route('admin.banner') }}">{{ __('home.banner') }}</a> --}}
-            <a class="collapse-item" href="{{ route('admin.general') }}">{{ __('home.generalsetting') }}</a>
           </div>
         </div>
       </li>
@@ -215,10 +122,6 @@
               </ul>
             </li>
 
-            {{-- <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>       --}}
-            {{-- <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a>  --}}
-            {{--  --}}
-
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
@@ -235,40 +138,6 @@
                 </a>
               </div>
             </li>
-             {{-- notification --}}
-            {{-- <li class="nav-item dropdown no-arrow notification">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge" id="count">
-                        @if(count(auth()->user()->unreadNotifications))
-                            <span class="badge badge-warning">{{ count(auth()->user()->unreadNotifications) }}</span>
-                        @endif
-                    </span>
-                </a> --}}
-                <!-- Dropdown - Notification Information -->
-                {{-- <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" role="menu">
-                  <span class="dropdown-header">{{ __('home.unnotifi') }}</span>
-                  @foreach (auth()->user()->unreadNotifications as $notification)
-                    <a href="#" class="dropdown-item {{ $notification->read_at == null ? 'unread' : '' }}" >
-                        <i class="fas fa-envelope"></i> {{ $notification->data['title'] }}
-                        <span class="ml-2 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
-                    </a>
-                  @endforeach
-
-                  <div class="dropdown-divider"></div>
-                  <span class="dropdown-header">{{ __('home.notifi') }}</span>
-                  @forelse(auth()->user()->readNotifications as $notification)
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-envelope mr-2"></i> {{ $notification->data['description'] }}
-                        <span class="ml-3 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
-                    </a>
-                  @empty
-                  <span class="ml-3 pull-right text-muted text-sm">{{ __('home.nonotifi') }}</span>
-                  @endforelse
-
-                  <div class="dropdown-divider"></div>
-                </div> --}}
-              {{-- </li> --}}
           </ul>
 
         </nav>

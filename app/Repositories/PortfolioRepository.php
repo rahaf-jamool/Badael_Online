@@ -36,51 +36,52 @@ class PortfolioRepository implements RepositoryInterface{
 
     public function store(Request $request)
     {
-        /** transformation to collection */
-        $allportfolioes = collect($request->portfolio)->all();
+        
+        // /** transformation to collection */
+        // $allportfolioes = collect($request->portfolio)->all();
 
-        $slug= $request->portfolio['en']['name'];
+        // $slug= $request->portfolio['en']['name'];
 
-        $cover = $request->file('cover');
-        if($cover){
-            $cover_path = $cover->store('images/portfolio', 'public');
-        }
+        // $cover = $request->file('cover');
+        // if($cover){
+        //     $cover_path = $cover->store('images/portfolio', 'public');
+        // }
 
-        $mobileImage = $request->file('mobileImage');
-        if($mobileImage){
-            $mobileImage_path = $mobileImage->store('images/portfolio', 'public');
-        }
+        // $mobileImage = $request->file('mobileImage');
+        // if($mobileImage){
+        //     $mobileImage_path = $mobileImage->store('images/portfolio', 'public');
+        // }
 
-        $request->is_active ? $is_active = true : $is_active = false;
+        // $request->is_active ? $is_active = true : $is_active = false;
 
-        DB::beginTransaction();
-        // create the default language's portfolio
-        $unTransPortfolio_id = $this->portfolio->insertGetId([
-            'slug' => $slug ,
-            'pcategory_id' => $request['category'],
-            'mobileImage' => $mobileImage_path,
-            'cover' => $cover_path,
-            'link' => $request['link'],
-            'date' => $request['date'],
-            'is_active' => $request->is_active = 1
-        ]);
+        // DB::beginTransaction();
+        // // create the default language's portfolio
+        // $unTransPortfolio_id = $this->portfolio->insertGetId([
+        //     'slug' => $slug ,
+        //     'pcategory_id' => $request['category'],
+        //     'mobileImage' => $mobileImage_path,
+        //     'cover' => $cover_path,
+        //     'link' => $request['link'],
+        //     'date' => $request['date'],
+        //     'is_active' => $request->is_active = 1
+        // ]);
 
-        // check the Portfolio and request
-        if(isset($allportfolioes) && count($allportfolioes)){
-            // insert other translation for Portfolioes
-            foreach ($allportfolioes as $allportfolio){
-                $transPortfolio_arr[] = [
-                    'name' => $allportfolio ['name'],
-                    'local' => $allportfolio['local'],
-                    'client' => $allportfolio['client'],
-                    'desc' => $allportfolio['desc'],
-                    'portfolio_id' => $unTransPortfolio_id
-                ];
-            }
+        // // check the Portfolio and request
+        // if(isset($allportfolioes) && count($allportfolioes)){
+        //     // insert other translation for Portfolioes
+        //     foreach ($allportfolioes as $allportfolio){
+        //         $transPortfolio_arr[] = [
+        //             'name' => $allportfolio ['name'],
+        //             'local' => $allportfolio['local'],
+        //             'client' => $allportfolio['client'],
+        //             'desc' => $allportfolio['desc'],
+        //             'portfolio_id' => $unTransPortfolio_id
+        //         ];
+        //     }
 
-            $this->portfolioTranslation->insert($transPortfolio_arr);
-        }
-        DB::commit();
+        //     $this->portfolioTranslation->insert($transPortfolio_arr);
+        // }
+        // DB::commit();
     }
 
     public function show($id)

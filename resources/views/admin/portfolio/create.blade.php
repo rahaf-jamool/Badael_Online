@@ -118,6 +118,43 @@
 
         </div>
         </div>
+
+        {{-- change language --}}
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link bg-aqua-active" href="" id="english-link">EN</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" id="arabic-link">AR</a>
+            </li>
+         </ul>
+
+         <div class="card-body" id="english-form">
+            <div class="form-group">
+                <label class="required" for="en_title">Name (EN)</label>
+                <input class="form-control {{ $errors->has('en_title') ? 'is-invalid' : '' }}" type="text" name="en_title" id="en_title" value="{{ old('en_title', '') }}" required>
+                @if($errors->has('en_title'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('en_title') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <div class="card-body d-none" id="arabic-form">
+            <div class="form-group">
+                <label class="required" for="title">Name (AR)</label>
+                <input class="form-control {{ $errors->has('es_title') ? 'is-invalid' : '' }}" type="text" name="es_title" id="es_title" value="{{ old('es_title', '') }}" required>
+                @if($errors->has('es_title'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('es_title') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+
+
+        {{-- /////////////// --}}
         {{-- category --}}
         <div class="form-group ml-4">
 
@@ -155,127 +192,6 @@
 
         </div>
 
-        {{-- name --}}
-        <div class="form-group ml-2 col-sm-7">
-            <div class="rowInput">
-
-                <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Nenglish') }}</label>
-
-                    <input type="text" name='portfolio[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
-                    <input type="text" name='portfolio[en][local]' value='en' hidden>
-
-                    @error('portfolio.en.name')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="ar col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Narabic') }}</label>
-
-                    <input type="text" name='portfolio[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
-                    <input type="text" name='portfolio[ar][local]' value='ar' hidden>
-
-                    @error('portfolio.ar.name')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <select class="form-control col-sm-2 selectLang" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
-
-            </div>
-        </div>
-
-        {{-- client --}}
-        <div class="form-group ml-2 col-sm-7">
-            <div class="rowInput">
-
-                <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Cenglish') }}</label>
-
-                    <input type="text" name='portfolio[en][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client')}}" id="client">
-                    <input type="text" name='portfolio[en][local]' value='en' hidden>
-
-                    @error('portfolio.en.client')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="ar col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Carabic') }}</label>
-
-                    <input type="text" name='portfolio[ar][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client')}}" id="client">
-                    <input type="text" name='portfolio[ar][local]' value='ar' hidden>
-
-                    @error('portfolio.ar.client')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <select class="form-control col-sm-2 selectLang" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
-
-            </div>
-        </div>
-
-        {{-- desc --}}
-        <div class="form-group ml-2 col-sm-7">
-            <div class="rowInput">
-
-                <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Denglish') }}</label>
-
-                    <textarea name="portfolio[en][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc')}}</textarea>
-                    <input type="text" name='portfolio[en][local]' value='en' hidden>
-
-                    @error('portfolio.en.desc')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="ar col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Darabic') }}</label>
-
-                    <textarea name="portfolio[ar][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc')}}</textarea>
-                    <input type="text" name='portfolio[ar][local]' value='ar' hidden>
-
-                    @error('portfolio.ar.desc')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <select class="form-control col-sm-2 selectLang" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
-
-            </div>
-        </div>
-
-        <div class="form-group ml-4">
-
-            <label for="date" class="col-sm-2 col-form-label">{{ __('portfolio.Pdate') }}</label>
-
-            <div class="col-sm-7">
-
-                <input type="date" name='date' class="form-control {{$errors->first('date') ? "is-invalid" : "" }} " value="{{old('date')}}" id="date" >
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('date') }}
-                </div>
-
-            </div>
-
-        </div>
-
         <div class="form-group ml-4">
 
             <div class="col-sm-3">
@@ -294,30 +210,25 @@
 @push('scripts')
 
 <script>
-    // language
-    window.onload = function () {
-        if(localStorage.getItem('local') == 'en'){
-                $('.ar').css({display: "none"});
-                $('.en').css({display: "block"});
-        }else{
-                $('.ar').css({display: "block"});
-                $('.en').css({display: "none"});
-        }
-    }
+    // change language
+    var $englishForm = $('#english-form');
+   var $arabicForm = $('#arabic-form');
+   var $englishLink = $('#english-link');
+   var $arabicLink = $('#arabic-link');
 
-    $(function () {
-        $(".selectLang").change(function() {
-            var val = $(this).val();
-            localStorage.setItem('local',val);
-            if(localStorage.getItem('local') == 'en'){
-                $('.ar').css({display: "none"});
-                $('.en').css({display: "block"});
-        }else{
-                $('.ar').css({display: "block"});
-                $('.en').css({display: "none"});
-        }
-        });
-    });
+   $englishLink.click(function() {
+     $englishLink.toggleClass('bg-aqua-active');
+     $englishForm.toggleClass('d-none');
+     $arabicLink.toggleClass('bg-aqua-active');
+     $arabicForm.toggleClass('d-none');
+   });
+
+   $arabicLink.click(function() {
+     $englishLink.toggleClass('bg-aqua-active');
+     $englishForm.toggleClass('d-none');
+     $arabicLink.toggleClass('bg-aqua-active');
+     $arabicForm.toggleClass('d-none');
+   });
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){
       readURL(this);

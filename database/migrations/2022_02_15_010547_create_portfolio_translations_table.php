@@ -15,12 +15,14 @@ class CreatePortfolioTranslationsTable extends Migration
     {
         Schema::create('portfolio_translations', function (Blueprint $table) {
             $table->id();
-            $table->integer('portfolio_id');
+            $table->foreignId('portfolio_id')->constrained()->onDelete('cascade');
+            $table->string('locale')->index();
             $table->string('name');
             $table->string('client');
             $table->longText('desc');
-            $table->string('local');
             $table->timestamps();
+
+            $table->unique(['portfolio_id','locale']);
         });
     }
 

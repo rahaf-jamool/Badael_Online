@@ -120,41 +120,82 @@
         </div>
 
         {{-- change language --}}
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link bg-aqua-active" href="" id="english-link">EN</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="" id="arabic-link">AR</a>
-            </li>
-         </ul>
+        <div class="container">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-link bg-aqua-active" id="englishLink"><a class="text-decoration-none" href="#english-form" role="tab" data-toggle="tab">Name (EN)</a></li>
+              <li class="nav-link" id="arabicLink"><a class="text-decoration-none" href="#arabic-form" role="tab" data-toggle="tab">Name (AR)</a></li>
+            </ul>
 
-         <div class="card-body" id="english-form">
-            <div class="form-group">
-                <label class="required" for="en_title">Name (EN)</label>
-                <input class="form-control {{ $errors->has('en_title') ? 'is-invalid' : '' }}" type="text" name="en_title" id="en_title" value="{{ old('en_title', '') }}" required>
-                @if($errors->has('en_title'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('en_title') }}
-                    </div>
-                @endif
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="card-body tab-pane active" id="english-form">
+                  {{-- name --}}
+                <div class="form-group">
+                    <label class="required" for="en_name">Name (EN)</label>
+                    <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ old('en_name', '') }}" required>
+                    @if($errors->has('en_name'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('en_name') }}
+                        </div>
+                    @endif
+                </div>
+                {{-- client --}}
+                <div class="form-group">
+                    <label class="required" for="en_client">Client (EN)</label>
+                    <input class="form-control {{ $errors->has('en_client') ? 'is-invalid' : '' }}" type="text" name="en_client" id="en_client" value="{{ old('en_client', '') }}" required>
+                    @if($errors->has('en_client'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('en_client') }}
+                        </div>
+                    @endif
+                </div>
+                {{-- desc --}}
+                <div class="form-group">
+                    <label class="required" for="en_desc">Description (EN)</label>
+                    <input class="form-control {{ $errors->has('en_desc') ? 'is-invalid' : '' }}" type="text" name="en_desc" id="en_desc" value="{{ old('en_desc', '') }}" required>
+                    @if($errors->has('en_desc'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('en_desc') }}
+                        </div>
+                    @endif
+                </div>
+              </div>
+              <div class="card-body tab-pane" id="arabic-form">
+                  {{-- name --}}
+                <div class="form-group">
+                    <label class="required" for="title">Name (AR)</label>
+                    <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name" value="{{ old('ar_name', '') }}" required>
+                    @if($errors->has('ar_name'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('ar_name') }}
+                        </div>
+                    @endif
+                </div>
+                {{-- client --}}
+                <div class="form-group">
+                    <label class="required" for="title">Client (AR)</label>
+                    <input class="form-control {{ $errors->has('ar_client') ? 'is-invalid' : '' }}" type="text" name="ar_client" id="ar_client" value="{{ old('ar_client', '') }}" required>
+                    @if($errors->has('ar_client'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('ar_client') }}
+                        </div>
+                    @endif
+                </div>
+                {{-- desc --}}
+                <div class="form-group">
+                    <label class="required" for="title">Description (AR)</label>
+                    <input class="form-control {{ $errors->has('ar_desc') ? 'is-invalid' : '' }}" type="text" name="ar_desc" id="ar_desc" value="{{ old('ar_desc', '') }}" required>
+                    @if($errors->has('ar_desc'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('ar_desc') }}
+                        </div>
+                    @endif
+                </div>
+              </div>
             </div>
+
         </div>
-
-        <div class="card-body d-none" id="arabic-form">
-            <div class="form-group">
-                <label class="required" for="title">Name (AR)</label>
-                <input class="form-control {{ $errors->has('es_title') ? 'is-invalid' : '' }}" type="text" name="es_title" id="es_title" value="{{ old('es_title', '') }}" required>
-                @if($errors->has('es_title'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('es_title') }}
-                    </div>
-                @endif
-            </div>
-        </div>
-
-
-        {{-- /////////////// --}}
         {{-- category --}}
         <div class="form-group ml-4">
 
@@ -194,6 +235,22 @@
 
         <div class="form-group ml-4">
 
+            <label for="date" class="col-sm-2 col-form-label">{{ __('portfolio.Pdate') }}</label>
+
+            <div class="col-sm-7">
+
+                <input type="date" name='date' class="form-control {{$errors->first('date') ? "is-invalid" : "" }} " value="{{old('date')}}" id="date" >
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('date') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group ml-4">
+
             <div class="col-sm-3">
 
                 <button type="submit" class="btn btn-primary">{{ __('portfolio.create') }}</button>
@@ -210,29 +267,6 @@
 @push('scripts')
 
 <script>
-    // change language
-    var $englishForm = $('#english-form');
-   var $arabicForm = $('#arabic-form');
-   var $englishLink = $('#english-link');
-   var $arabicLink = $('#arabic-link');
-
-   $englishLink.click(function() {
-     $englishLink.toggleClass('bg-aqua-active');
-     $englishForm.toggleClass('d-none');
-     $arabicLink.toggleClass('bg-aqua-active');
-     $arabicForm.toggleClass('d-none');
-   });
-
-   $arabicLink.click(function() {
-     $englishLink.toggleClass('bg-aqua-active');
-     $englishForm.toggleClass('d-none');
-     $arabicLink.toggleClass('bg-aqua-active');
-     $arabicForm.toggleClass('d-none');
-   });
-    // Prepare the preview for profile picture
-    $("#wizard-picture").change(function(){
-      readURL(this);
-  });
   //Function to show image before upload
 function readURL(input) {
   if (input.files && input.files[0]) {

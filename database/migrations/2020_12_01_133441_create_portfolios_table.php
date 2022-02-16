@@ -21,7 +21,6 @@ class CreatePortfoliosTable extends Migration
             $table->string('mobileImage')->nullable();
 			 $table->string('link');
             $table->date('date')->nullable();
-            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

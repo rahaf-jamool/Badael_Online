@@ -2,21 +2,22 @@
 
 namespace App\Models\Portfolio;
 
-use App\Scopes\PortfolioScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Portfolio extends Model
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+class Portfolio extends Model implements TranslatableContract
 {
-    use HasFactory;
+    use HasFactory,Translatable;
     protected $primaryKey = 'id';
     protected $table='portfolios';
+
     protected $hidden = [
         'created_at', 'updated_at'
     ];
-    protected $casts = [
-        'is_active' => 'boolean'
-    ];
+
+    public $translatedAttributes = ['name', 'client','desc'];
+
     protected $fillable = [
         'slug',
         'pcategory_id',
@@ -24,16 +25,11 @@ class Portfolio extends Model
         'mobileImage',
         'link',
         'date',
-        'is_active'
     ];
-    protected static function booted()
-    {
-        parent::booted();
-        static::addGlobalScope(new PortfolioScope);
-    }
+
     public function PortfolioTranslation()
     {
-        return $this->hasMany(PortfolioTranslation::class);
+        return $this->hasMany(PortfolioTranslation::class , 'portfolio_id');
     }
 
     public function pcategory()

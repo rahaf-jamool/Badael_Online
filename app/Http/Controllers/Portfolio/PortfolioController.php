@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Service\Portfolio\PortfolioService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
+use App\Models\Portfolio\Portfolio;
 
 class PortfolioController extends Controller
 {
@@ -15,6 +16,7 @@ class PortfolioController extends Controller
     {
         $this->portfolioService=$portfolioService;
     }
+
     public function index(){
         $portfolio = $this->portfolioService->index();
         return view('admin.portfolio.index',compact('portfolio'));
@@ -27,12 +29,13 @@ class PortfolioController extends Controller
 
     public function store(Request $request){
         try{
+
             $this->portfolioService->store($request);
             return redirect()->route('admin.portfolio')->with('success', 'Data added successfully');
 
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.portfolio.create')->with('error', 'Data failed to add');
         }
     }

@@ -9,16 +9,15 @@ use App\Models\Portfolio\PortfolioTranslation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PortfolioRepository implements RepositoryInterface{
 
-    private $request;
     private $pcategory;
     private $portfolio;
     private $portfolioTranslation;
-    public function __construct(Portfolio $portfolio, PortfolioTranslation $portfolioTranslation, Pcategory $pcategory, Request $request)
+    public function __construct(Portfolio $portfolio, PortfolioTranslation $portfolioTranslation, Pcategory $pcategory)
     {
-        $this->request = $request;
         $this->pcategory = $pcategory;
         $this->portfolio = $portfolio;
         $this->portfolioTranslation = $portfolioTranslation;
@@ -36,52 +35,43 @@ class PortfolioRepository implements RepositoryInterface{
 
     public function store(Request $request)
     {
-        
-        // /** transformation to collection */
-        // $allportfolioes = collect($request->portfolio)->all();
 
-        // $slug= $request->portfolio['en']['name'];
+        DB::beginTransaction();
 
-        // $cover = $request->file('cover');
-        // if($cover){
-        //     $cover_path = $cover->store('images/portfolio', 'public');
-        // }
+        $cover = $request->file('cover');
+        if($cover){
+            $cover_path = $cover->store('images/portfolio', 'public');
+        }
 
-        // $mobileImage = $request->file('mobileImage');
-        // if($mobileImage){
-        //     $mobileImage_path = $mobileImage->store('images/portfolio', 'public');
-        // }
+        $mobileImage = $request->file('mobileImage');
+        if($mobileImage){
+            $mobileImage_path = $mobileImage->store('images/portfolio', 'public');
+        }
 
-        // $request->is_active ? $is_active = true : $is_active = false;
+        $slug = $request->en_name;
 
-        // DB::beginTransaction();
-        // // create the default language's portfolio
-        // $unTransPortfolio_id = $this->portfolio->insertGetId([
-        //     'slug' => $slug ,
-        //     'pcategory_id' => $request['category'],
-        //     'mobileImage' => $mobileImage_path,
-        //     'cover' => $cover_path,
-        //     'link' => $request['link'],
-        //     'date' => $request['date'],
-        //     'is_active' => $request->is_active = 1
-        // ]);
+        $data = [
+            'slug' => $slug,
+            'pcategory_id' => $request->input('category'),
+            'mobileImage' => $mobileImage_path,
+            'cover' => $cover_path,
+            'link' => $request->input('link'),
+            'date' => $request->input('date'),
+            'en' => [
+                'name' => $request->input('en_name'),
+                'client' => $request->input('en_client'),
+                'desc' => $request->input('en_desc'),
+            ],
+            'ar' => [
+                'name' => $request->input('ar_name'),
+                'client' => $request->input('ar_client'),
+                'desc' => $request->input('ar_desc'),
+            ],
+        ];
 
-        // // check the Portfolio and request
-        // if(isset($allportfolioes) && count($allportfolioes)){
-        //     // insert other translation for Portfolioes
-        //     foreach ($allportfolioes as $allportfolio){
-        //         $transPortfolio_arr[] = [
-        //             'name' => $allportfolio ['name'],
-        //             'local' => $allportfolio['local'],
-        //             'client' => $allportfolio['client'],
-        //             'desc' => $allportfolio['desc'],
-        //             'portfolio_id' => $unTransPortfolio_id
-        //         ];
-        //     }
+        $this->portfolio::create($data);
 
-        //     $this->portfolioTranslation->insert($transPortfolio_arr);
-        // }
-        // DB::commit();
+        DB::commit();
     }
 
     public function show($id)
@@ -99,16 +89,15 @@ class PortfolioRepository implements RepositoryInterface{
 
     public function update(Request $request,$id)
     {
+        DB::beginTransaction();
+
         $portfolio = $this->portfolio->findOrFail($id);
-
-            $slug= $request->portfolio['en']['name'];
-
         // image desktop
         $new_cover = $request->file('cover');
 
         if($new_cover){
-            if($request->cover && file_exists(storage_path('app/public/' .$request->cover))){
-                Storage::delete('public/'. $request->cover);
+            if($portfolio->cover && file_exists(storage_path('app/public/' .$portfolio->cover))){
+                Storage::delete('public/'. $portfolio->cover);
             }
             $new_cover_path = $new_cover->store('images/portfolio', 'public');
 
@@ -124,32 +113,29 @@ class PortfolioRepository implements RepositoryInterface{
 
         }
 
-            DB::beginTransaction();
-            // //create the default language's portfolio
-            $unTransPortfolio_id = $this->portfolio->where('portfolios.id', $portfolio->id)
-                ->update([
-                    'slug' => $slug,
-                    'pcategory_id' => $this->request['category'],
-                    'date' => $this->request['date'],
-                    'is_active' => $this->request->is_active = 1,
-                    'cover' => $new_cover_path,
-                    'mobileImage' => $new_mobileImage_path
-            ]);
+        $slug = $request->en_name;
 
-            $allportfolioes = array_values($this->request->portfolio);
-                //insert other translations for Portfolio
-                foreach ($allportfolioes as $allportfolio) {
-                    $this->portfolioTranslation->where('portfolio_id', $id)
-                    ->where('local', $allportfolio['local'])
-                    ->update([
-                        'name' => $allportfolio ['name'],
-                        'local' => $allportfolio['local'],
-                        'client' => $allportfolio['client'],
-                        'desc' => $allportfolio['desc'],
-                        'portfolio_id' =>  $portfolio->id
-                    ]);
-                }
-            DB::commit();
+        $data = [
+            'slug' => $slug,
+            'pcategory_id' => $request->input('category'),
+            'mobileImage' => $new_mobileImage_path,
+            'cover' => $new_cover_path,
+            'link' => $request->input('link'),
+            'date' => $request->input('date'),
+            'en' => [
+                'name' => $request->input('en_name'),
+                'client' => $request->input('en_client'),
+                'desc' => $request->input('en_desc'),
+            ],
+            'ar' => [
+                'name' => $request->input('ar_name'),
+                'client' => $request->input('ar_client'),
+                'desc' => $request->input('ar_desc'),
+            ],
+        ];
+        $portfolio->update($data);
+
+        DB::commit();
     }
 
     public function destroy($id)

@@ -117,7 +117,87 @@
 
         </div>
         </div>
-        {{--  --}}
+
+        {{-- change language --}}
+        <div class="container">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-link bg-aqua-active" id="englishLink"><a class="text-decoration-none" href="#english-form" role="tab" data-toggle="tab">Name (EN)</a></li>
+                <li class="nav-link" id="arabicLink"><a class="text-decoration-none" href="#arabic-form" role="tab" data-toggle="tab">Name (AR)</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="card-body tab-pane active" id="english-form">
+                    {{-- name --}}
+                    <div class="form-group">
+                        <label class="required" for="en_name">Name (EN)</label>
+                        <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ $portfolio->getTranslation('name','en')  }}" required>
+                        @if($errors->has('en_name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('en_name') }}
+                            </div>
+                        @endif
+                    </div>
+                    {{-- client --}}
+                    <div class="form-group">
+                        <label class="required" for="en_client">Client (EN)</label>
+                        <input class="form-control {{ $errors->has('en_client') ? 'is-invalid' : '' }}" type="text" name="en_client" id="en_client" value="{{ old('en_client') ? old('en_client') : $portfolio->en_client  }}" required>
+                        @if($errors->has('en_client'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('en_client') }}
+                            </div>
+                        @endif
+                    </div>
+                    {{-- desc --}}
+                    <div class="form-group">
+                        <label class="required" for="en_desc">Description (EN)</label>
+                        <input class="form-control {{ $errors->has('en_desc') ? 'is-invalid' : '' }}" type="text" name="en_desc" id="en_desc" value="{{ old('en_desc') ? old('en_desc') : $portfolio->en_desc }}" required>
+                        @if($errors->has('en_desc'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('en_desc') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="card-body tab-pane" id="arabic-form">
+                    {{-- name --}}
+                    <div class="form-group">
+                        <label class="required" for="title">Name (AR)</label>
+                        <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name" @if($portfolio->locale == 'ar') value="{{ $portfolio->name  }}" required>
+                        @if($errors->has('ar_name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('ar_name') }}
+                            </div>
+                        @endif
+                    </div>
+                    {{-- client --}}
+                    <div class="form-group">
+                        <label class="required" for="title">Client (AR)</label>
+
+                        <input class="form-control {{ $errors->has('ar_client') ? 'is-invalid' : '' }}" type="text" name="ar_client" id="ar_client"  value="{{ old('ar_client') ? old('ar_client') : $portfolio->ar_client }}" required>
+                        @if($errors->has('ar_client'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('ar_client') }}
+                            </div>
+                        @endif
+                    </div>
+                    {{-- desc --}}
+                    <div class="form-group">
+                        <label class="required" for="title">Description (AR)</label>
+                        <input class="form-control {{ $errors->has('ar_desc') ? 'is-invalid' : '' }}" type="text" name="ar_desc" id="ar_desc" value="{{ old('ar_desc') ? old('ar_desc') : $portfolio->ar_desc }}" required>
+                        @if($errors->has('ar_desc'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('ar_desc') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        {{--  category  --}}
         <div class="form-group ml-4">
 
             <label for="category" class="col-sm-2 col-form-label">{{ __('portfolio.category') }}</label>
@@ -138,109 +218,20 @@
 
         </div>
 
-        {{-- name --}}
-        <div class="form-group ml-2 col-sm-7">
-            <div class="rowInput">
+        <div class="form-group ml-4">
 
-                <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Nenglish') }}</label>
+            <label for="link" class="col-sm-2 col-form-label">{{ __('portfolio.link') }}</label>
 
-                    <input type="text" name='portfolio[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $portfolio->name}}" id="name">
-                    <input type="text" name='portfolio[en][local]' value='en' hidden>
+            <div class="col-sm-7">
 
-                    @error('portfolio.en.name')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
+                <input type="text" name='link' class="form-control {{$errors->first('link') ? "is-invalid" : "" }} " value="{{old('link') ? old('link') : $portfolio->link}}" id="link">
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('link') }}
                 </div>
-
-                <div class="ar col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Narabic') }}</label>
-
-                    <input type="text" name='portfolio[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $portfolio->name}}" id="name">
-                    <input type="text" name='portfolio[ar][local]' value='ar' hidden>
-
-                    @error('portfolio.ar.name')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <select class="form-control col-sm-2 selectLang" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
 
             </div>
-        </div>
 
-        {{-- client --}}
-        <div class="form-group ml-2 col-sm-7">
-            <div class="rowInput">
-
-                <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Cenglish') }}</label>
-
-                    <input type="text" name='portfolio[en][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client') ? old('client') : $portfolio->client}}" id="client">
-                    <input type="text" name='portfolio[en][local]' value='en' hidden>
-
-                    @error('portfolio.en.client')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="ar col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Carabic') }}</label>
-
-                    <input type="text" name='portfolio[ar][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client') ? old('client') : $portfolio->client}}" id="client">
-                    <input type="text" name='portfolio[ar][local]' value='ar' hidden>
-
-                    @error('portfolio.ar.client')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <select class="form-control col-sm-2 selectLang" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
-
-            </div>
-        </div>
-
-        {{-- desc --}}
-        <div class="form-group ml-2 col-sm-7">
-            <div class="rowInput">
-
-                <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Denglish') }}</label>
-
-                    <textarea name="portfolio[en][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc') ? old('desc') : $portfolio->desc}}</textarea>
-                    <input type="text" name='portfolio[en][local]' value='en' hidden>
-
-                    @error('portfolio.en.desc')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="ar col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('portfolio.Darabic') }}</label>
-
-                    <textarea name="portfolio[ar][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc') ? old('desc') : $portfolio->desc}}</textarea>
-                    <input type="text" name='portfolio[ar][local]' value='ar' hidden>
-
-                    @error('portfolio.ar.desc')
-                        <small class="form-text text-danger"> {{ $message }}</small>
-                    @enderror
-                </div>
-
-                <select class="form-control col-sm-2 selectLang" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
-
-            </div>
         </div>
 
         <div class="form-group ml-4">

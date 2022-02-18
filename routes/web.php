@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Portfolio\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -23,8 +22,6 @@ Route::get('/', function () {
 });
 // change language
 Route::get('locale/{locale}','Languages\LanguageController@changeLang');
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->middleware(['auth','Localization'])->group(function () {
 

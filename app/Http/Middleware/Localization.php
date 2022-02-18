@@ -23,8 +23,6 @@ class Localization
         //     // set laravel localization
             App::setLocale(session()->get('locale'));
         }
-
-        
         return $next($request);
     }
 }

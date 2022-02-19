@@ -132,7 +132,7 @@
                     {{-- name --}}
                     <div class="form-group">
                         <label class="required" for="en_name">Name (EN)</label>
-                        <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ $portfolio->getTranslation('name','en')  }}" required>
+                        <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ $portfolio->getAttribute('name','en') }}" required>
                         @if($errors->has('en_name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('en_name') }}
@@ -142,7 +142,7 @@
                     {{-- client --}}
                     <div class="form-group">
                         <label class="required" for="en_client">Client (EN)</label>
-                        <input class="form-control {{ $errors->has('en_client') ? 'is-invalid' : '' }}" type="text" name="en_client" id="en_client" value="{{ old('en_client') ? old('en_client') : $portfolio->en_client  }}" required>
+                        <input class="form-control {{ $errors->has('en_client') ? 'is-invalid' : '' }}" type="text" name="en_client" id="en_client" value="{{ $portfolio->getAttribute('client:en') }}" required>
                         @if($errors->has('en_client'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('en_client') }}
@@ -152,7 +152,7 @@
                     {{-- desc --}}
                     <div class="form-group">
                         <label class="required" for="en_desc">Description (EN)</label>
-                        <input class="form-control {{ $errors->has('en_desc') ? 'is-invalid' : '' }}" type="text" name="en_desc" id="en_desc" value="{{ old('en_desc') ? old('en_desc') : $portfolio->en_desc }}" required>
+                        <input class="form-control {{ $errors->has('en_desc') ? 'is-invalid' : '' }}" type="text" name="en_desc" id="en_desc" value="{{ $portfolio->getAttribute('desc:en') }}" required>
                         @if($errors->has('en_desc'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('en_desc') }}
@@ -164,7 +164,7 @@
                     {{-- name --}}
                     <div class="form-group">
                         <label class="required" for="title">Name (AR)</label>
-                        <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name" @if($portfolio->locale == 'ar') value="{{ $portfolio->name  }}" required>
+                        <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name" value="{{ $portfolio->getAttribute('name:ar') }}" required>
                         @if($errors->has('ar_name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ar_name') }}
@@ -175,7 +175,7 @@
                     <div class="form-group">
                         <label class="required" for="title">Client (AR)</label>
 
-                        <input class="form-control {{ $errors->has('ar_client') ? 'is-invalid' : '' }}" type="text" name="ar_client" id="ar_client"  value="{{ old('ar_client') ? old('ar_client') : $portfolio->ar_client }}" required>
+                        <input class="form-control {{ $errors->has('ar_client') ? 'is-invalid' : '' }}" type="text" name="ar_client" id="ar_client"  value="{{ $portfolio->getAttribute('client:ar') }}" required>
                         @if($errors->has('ar_client'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ar_client') }}
@@ -185,7 +185,7 @@
                     {{-- desc --}}
                     <div class="form-group">
                         <label class="required" for="title">Description (AR)</label>
-                        <input class="form-control {{ $errors->has('ar_desc') ? 'is-invalid' : '' }}" type="text" name="ar_desc" id="ar_desc" value="{{ old('ar_desc') ? old('ar_desc') : $portfolio->ar_desc }}" required>
+                        <input class="form-control {{ $errors->has('ar_desc') ? 'is-invalid' : '' }}" type="text" name="ar_desc" id="ar_desc" value="{{ $portfolio->getAttribute('desc:ar') }}" required>
                         @if($errors->has('ar_desc'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ar_desc') }}

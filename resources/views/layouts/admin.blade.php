@@ -113,12 +113,18 @@
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
+
             {{-- dropdown language --}}
             <li class="dropdown m-4">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button">{{ __('home.lang') }}</a>
               <ul class="dropdown-menu">
-                <li><a href="{{url("locale/en")}}">EN</a></li>
-                <li><a href="{{url("locale/ar")}}">AR</a></li>
+                  @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                    <li>
+                        <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                            {{ $properties['native'] }}
+                        </a>
+                    </li>
+                  @endforeach
               </ul>
             </li>
 

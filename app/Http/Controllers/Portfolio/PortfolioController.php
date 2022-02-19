@@ -50,12 +50,12 @@ class PortfolioController extends Controller
 
     public function update(Request $request,$id){
         try{
-            return $this->portfolioService->update($request,$id);
+            $this->portfolioService->update($request,$id);
             return redirect()->route('admin.portfolio')->with('success', 'Data updated successfully');
 
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.portfolio.edit')->with('error', 'Data failed to update');
         }
     }

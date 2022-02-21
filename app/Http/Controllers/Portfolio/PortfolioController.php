@@ -42,7 +42,10 @@ class PortfolioController extends Controller
     }
 
     public function edit($id){
-        return $this->portfolioService->edit($id);
+        $portfolio = $this->portfolioService->edit($id);
+        $categories = $this->portfolioService->create();
+        return view('admin.portfolio.edit',compact('portfolio','categories'));
+
     }
 
     public function update(PortfolioRequest $request,$id){
@@ -52,7 +55,6 @@ class PortfolioController extends Controller
 
         }catch(\Exception $ex){
             DB::rollback();
-//            return $ex->getMessage();
             return redirect()->route('admin.portfolio.edit')->withErrors(['error'=> $ex->getMessage()]);
         }
     }

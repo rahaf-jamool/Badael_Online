@@ -16,7 +16,7 @@ interface RepositoryInterface{
 
     public function edit($id);
 
-    public function update(Request $request, $id);
+    public function update($request, $id);
 
     public function destroy($id);
 }

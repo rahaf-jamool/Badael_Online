@@ -76,10 +76,7 @@ class PortfolioRepository implements RepositoryInterface{
 
     public function edit($id)
     {
-        $portfolio = $this->portfolio->findOrFail($id);
-        $categories = $this->pcategory->get();
-//return
-        return view('admin.portfolio.edit',compact('portfolio','categories'));
+        return $this->portfolio->findOrFail($id);
     }
 
     public function update($request,$id)

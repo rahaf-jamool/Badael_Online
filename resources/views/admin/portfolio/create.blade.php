@@ -44,13 +44,6 @@
     justify-content: center;
     align-items: center;
 }
-.rowInput {
-    display: flex;
-    gap: 15px;
-}
-.selectLang {
-    margin-top: 38px;
-}
 </style>
 @endsection
 @section('content')
@@ -65,7 +58,7 @@
     @csrf
 
     <div class="form-group m-4">
-        <h2>{{__('portfolio.Cportfolio')}}</h2>
+        <h2>{{__('portfolio.Create portfolio')}}</h2>
     </div>
 
     <div class="container">
@@ -89,7 +82,7 @@
 
                 </div>
 
-                <h6>{{ __('portfolio.Scover') }}</h6>
+                <h6>{{ __('portfolio.Select cover') }}</h6>
 
             </div>
 
@@ -112,7 +105,7 @@
 
                 </div>
 
-                <h6>{{ __('portfolio.Simage') }}</h6>
+                <h6>{{ __('portfolio.Select image') }}</h6>
 
             </div>
 
@@ -123,8 +116,8 @@
         <div class="container">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-              <li class="nav-link bg-aqua-active" id="englishLink"><a class="text-decoration-none" href="#english-form" role="tab" data-toggle="tab">Name (EN)</a></li>
-              <li class="nav-link" id="arabicLink"><a class="text-decoration-none" href="#arabic-form" role="tab" data-toggle="tab">Name (AR)</a></li>
+              <li class="nav-link bg-aqua-active" id="englishLink"><a class="text-decoration-none" href="#english-form" role="tab" data-toggle="tab">{{__('portfolio.english')}}</a></li>
+              <li class="nav-link" id="arabicLink"><a class="text-decoration-none" href="#arabic-form" role="tab" data-toggle="tab">{{__('portfolio.arabic')}}</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -132,8 +125,8 @@
               <div class="card-body tab-pane active" id="english-form">
                   {{-- name --}}
                 <div class="form-group">
-                    <label class="required" for="en_name">Name (EN)</label>
-                    <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ old('en_name', '') }}" required>
+                    <label class="required" for="en_name">{{__('portfolio.Name english')}}</label>
+                    <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ old('en_name', '') }}" >
                     @if($errors->has('en_name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('en_name') }}
@@ -142,8 +135,8 @@
                 </div>
                 {{-- client --}}
                 <div class="form-group">
-                    <label class="required" for="en_client">Client (EN)</label>
-                    <input class="form-control {{ $errors->has('en_client') ? 'is-invalid' : '' }}" type="text" name="en_client" id="en_client" value="{{ old('en_client', '') }}" required>
+                    <label class="required" for="en_client">{{__('portfolio.Client english')}}</label>
+                    <input class="form-control {{ $errors->has('en_client') ? 'is-invalid' : '' }}" type="text" name="en_client" id="en_client" value="{{ old('en_client', '') }}" >
                     @if($errors->has('en_client'))
                         <div class="invalid-feedback">
                             {{ $errors->first('en_client') }}
@@ -152,8 +145,8 @@
                 </div>
                 {{-- desc --}}
                 <div class="form-group">
-                    <label class="required" for="en_desc">Description (EN)</label>
-                    <input class="form-control {{ $errors->has('en_desc') ? 'is-invalid' : '' }}" type="text" name="en_desc" id="en_desc" value="{{ old('en_desc', '') }}" required>
+                    <label class="required" for="en_desc">{{__('portfolio.Desc english')}}</label>
+                    <input class="form-control {{ $errors->has('en_desc') ? 'is-invalid' : '' }}" type="text" name="en_desc" id="en_desc" value="{{ old('en_desc', '') }}" >
                     @if($errors->has('en_desc'))
                         <div class="invalid-feedback">
                             {{ $errors->first('en_desc') }}
@@ -164,8 +157,8 @@
               <div class="card-body tab-pane" id="arabic-form">
                   {{-- name --}}
                 <div class="form-group">
-                    <label class="required" for="title">Name (AR)</label>
-                    <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name" value="{{ old('ar_name', '') }}" required>
+                    <label class="required" for="title">{{__('portfolio.Name arabic')}}</label>
+                    <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name" value="{{ old('ar_name', '') }}" >
                     @if($errors->has('ar_name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('ar_name') }}
@@ -174,8 +167,8 @@
                 </div>
                 {{-- client --}}
                 <div class="form-group">
-                    <label class="required" for="title">Client (AR)</label>
-                    <input class="form-control {{ $errors->has('ar_client') ? 'is-invalid' : '' }}" type="text" name="ar_client" id="ar_client" value="{{ old('ar_client', '') }}" required>
+                    <label class="required" for="title">{{__('portfolio.Client arabic')}}</label>
+                    <input class="form-control {{ $errors->has('ar_client') ? 'is-invalid' : '' }}" type="text" name="ar_client" id="ar_client" value="{{ old('ar_client', '') }}" >
                     @if($errors->has('ar_client'))
                         <div class="invalid-feedback">
                             {{ $errors->first('ar_client') }}
@@ -184,8 +177,8 @@
                 </div>
                 {{-- desc --}}
                 <div class="form-group">
-                    <label class="required" for="title">Description (AR)</label>
-                    <input class="form-control {{ $errors->has('ar_desc') ? 'is-invalid' : '' }}" type="text" name="ar_desc" id="ar_desc" value="{{ old('ar_desc', '') }}" required>
+                    <label class="required" for="title">{{__('portfolio.Desc arabic')}}</label>
+                    <input class="form-control {{ $errors->has('ar_desc') ? 'is-invalid' : '' }}" type="text" name="ar_desc" id="ar_desc" value="{{ old('ar_desc', '') }}" >
                     @if($errors->has('ar_desc'))
                         <div class="invalid-feedback">
                             {{ $errors->first('ar_desc') }}
@@ -204,7 +197,7 @@
             <div class="col-sm-7">
 
                 <select name='category' class="form-control {{$errors->first('category') ? "is-invalid" : "" }} " id="category">
-                    <option disabled selected>{{ __('portfolio.Chooseone') }}</option>
+                    <option disabled selected>{{ __('portfolio.Choose one') }}</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
@@ -235,7 +228,7 @@
 
         <div class="form-group ml-4">
 
-            <label for="date" class="col-sm-2 col-form-label">{{ __('portfolio.Pdate') }}</label>
+            <label for="date" class="col-sm-2 col-form-label">{{ __('portfolio.Project date') }}</label>
 
             <div class="col-sm-7">
 

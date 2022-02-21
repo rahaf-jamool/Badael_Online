@@ -15,30 +15,32 @@ return [
 
     // index
     'portfolio' => 'المشاريع',
-    'Cportfolio' => 'إضافة مشروع',
-    'Pdate' => 'تاريخ المشروع',
+    'Create portfolio' => 'إضافة مشروع',
+    'Project date' => 'تاريخ المشروع',
     'no' => 'الرقم',
     'cover' => 'الصورة',
     'name' => 'الاسم',
     'option' => 'الخيارات',
     'edit' => 'تعديل',
-    'del' => 'حذف',
+    'delete' => 'حذف',
+    'english' => 'الانجليزية',
+    'arabic' => 'العربية',
 
     // create
-    'Scover' => 'حدد الغلاف',
-    'Simage' => 'حدد صورة للموبايل',
+    'Select cover' => 'حدد الغلاف',
+    'Select image' => 'حدد صورة للموبايل',
     'category' => 'الفئات',
-    'Chooseone' => 'اختر واحدة !',
+    'Choose one' => 'اختر واحدة !',
     'link' => 'الرابط',
-    'Narabic' => 'الاسم بالعربي',
-    'Nenglish' => 'الاسم بالاجنبي',
-    'Carabic' => 'العميل بالعربي',
-    'Cenglish' => 'العميل بالاجنبي',
-    'Darabic' => 'الوصف بالعربي',
-    'Denglish' => 'الوصف بالاجنبي',
+    'Name arabic' => 'الاسم بالعربي',
+    'Name english' => 'الاسم بالاجنبي',
+    'Client arabic' => 'العميل بالعربي',
+    'Client english' => 'العميل بالاجنبي',
+    'Desc arabic' => 'الوصف بالعربي',
+    'Desc english' => 'الوصف بالاجنبي',
     'create' => 'إضافة',
 
     //update
-    'Uportfolio' => 'تعديل مشروع',
+    'Update portfolio' => 'تعديل مشروع',
     'update' => 'تعديل'
 ];

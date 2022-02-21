@@ -28,7 +28,7 @@ class PcategoryRepository implements RepositoryInterface{
 
     }
 
-    public function store(Request $request)
+    public function store($request)
     {
         /** transformation to collection */
         $allpcategories = collect($request->pcategory)->all();

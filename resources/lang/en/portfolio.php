@@ -15,30 +15,32 @@ return [
 
     // index
     'portfolio' => 'Portfolios',
-    'Cportfolio' => 'Create portfolio',
-    'Pdate' => 'Project Date',
+    'Create portfolio' => 'Create portfolio',
+    'Project date' => 'Project Date',
     'no' => 'NO',
     'cover' => 'Cover',
     'name' => 'Name',
     'option' => 'Option',
     'edit' => 'Edit',
-    'del' => 'Delete',
+    'delete' => 'Delete',
+    'english' => 'English',
+    'arabic' => 'Arabic',
 
     // create
-    'Scover' => 'Select cover',
-    'Simage' => 'Select image mobile',
+    'Select cover' => 'Select cover',
+    'Select image' => 'Select image mobile',
     'category' => 'Categories',
-    'Chooseone' => 'Choose One!',
+    'Choose one' => 'Choose One!',
     'link' => 'Link',
-    'Narabic' => 'Name Arabic',
-    'Nenglish' => 'Name English',
-    'Carabic' => 'Client Arabic',
-    'Cenglish' => 'Client English',
-    'Darabic' => 'Description Arabic',
-    'Denglish' => 'Description English',
+    'Name arabic' => 'Name Arabic',
+    'Name english' => 'Name English',
+    'Client arabic' => 'Client Arabic',
+    'Client english' => 'Client English',
+    'Desc arabic' => 'Description Arabic',
+    'Desc english' => 'Description English',
     'create' => 'Create',
 
     //update
-    'Uportfolio' => 'Update portfolio',
+    'Update portfolio' => 'Update portfolio',
     'update' => 'Update'
 ];

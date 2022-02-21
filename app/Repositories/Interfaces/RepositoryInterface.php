@@ -5,12 +5,12 @@ namespace App\Repositories\Interfaces;
 use Illuminate\Http\Request;
 
 interface RepositoryInterface{
-    
+
     public function index();
 
     public function create();
 
-    public function store(Request $request);
+    public function store($request);
 
     public function show($id);
 

@@ -24,26 +24,34 @@ class PortfolioRequest extends FormRequest
     public function rules()
     {
         return [
-            'portfolio.*.name'=>'required',
+            'en_name'=>'required',
+            'en_desc'=>'required|min:8|max:255',
+            'en_client'=>'required',
+
+            'ar_name'=>'required',
+            'ar_desc'=>'required|min:8|max:255',
+            'ar_client'=>'required',
+
             'category'=>'required',
-            'mobileImage'=>'required',
-            'cover'=>'required',
-            'date'=>'required',
-            'portfolio.*.desc'=>'required|min:8|max:255',
-            'portfolio.*.client'=>'required',
+
         ];
     }
     public function messages()
     {
         return [
 
-            // 'required'=>'this field is required',
-            'portfolio.*.desc.min' => 'Your Portfolio\'s description  Is Too Short',
-            // 'category.array' => 'Your Portfolio\'s pcategory is required array',
-            'category.required' => 'Your Portfolio\'s pcategory is required',
-            'portfolio.*.name.required' => 'the name is required',
-            'portfolio.*.desc.required' => 'the description is required',
-            'portfolio.*.client.required' => 'the client is required'
+            'en_desc.min' => 'Your Portfolio\'s description english  Is Too Short',
+            'ar_desc.min' => 'Your Portfolio\'s description arabic  Is Too Short',
+
+            'category.required' => __('validation.required'),
+
+            'en_name.required' => __('validation.required'),
+            'en_desc.required' => __('validation.required'),
+            'en_client.required' => __('validation.required'),
+
+            'ar_name.required' => __('validation.required'),
+            'ar_desc.required' => __('validation.required'),
+            'ar_client.required' => __('validation.required')
         ];
     }
 }

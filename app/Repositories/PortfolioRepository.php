@@ -5,22 +5,17 @@ namespace App\Repositories;
 use App\Models\Pcategory\Pcategory;
 use App\Models\Portfolio\Portfolio;
 use App\Repositories\Interfaces\RepositoryInterface;
-use App\Models\Portfolio\PortfolioTranslation;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class PortfolioRepository implements RepositoryInterface{
 
     private $pcategory;
     private $portfolio;
-    private $portfolioTranslation;
-    public function __construct(Portfolio $portfolio, PortfolioTranslation $portfolioTranslation, Pcategory $pcategory)
+    public function __construct(Portfolio $portfolio, Pcategory $pcategory)
     {
         $this->pcategory = $pcategory;
         $this->portfolio = $portfolio;
-        $this->portfolioTranslation = $portfolioTranslation;
     }
 
     public function index()
@@ -33,7 +28,7 @@ class PortfolioRepository implements RepositoryInterface{
         return $this->pcategory->get();
     }
 
-    public function store(Request $request)
+    public function store($request)
     {
 
         DB::beginTransaction();
@@ -83,11 +78,11 @@ class PortfolioRepository implements RepositoryInterface{
     {
         $portfolio = $this->portfolio->findOrFail($id);
         $categories = $this->pcategory->get();
-
+//return
         return view('admin.portfolio.edit',compact('portfolio','categories'));
     }
 
-    public function update(Request $request,$id)
+    public function update($request,$id)
     {
         DB::beginTransaction();
 

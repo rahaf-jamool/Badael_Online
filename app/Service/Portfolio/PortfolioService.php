@@ -20,7 +20,7 @@ class PortfolioService
         return $this->repositoryInterface->create();
     }
 
-    public function store(Request $request){
+    public function store($request){
         return $this->repositoryInterface->store($request);
     }
 
@@ -32,7 +32,7 @@ class PortfolioService
         return $this->repositoryInterface->edit($id);
     }
 
-    public function update(Request $request,$id){
+    public function update($request,$id){
         return $this->repositoryInterface->update($request,$id);
     }
 

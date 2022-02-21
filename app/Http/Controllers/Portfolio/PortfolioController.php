@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Portfolio;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Portfolio\PortfolioRequest;
 use App\Service\Portfolio\PortfolioService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use App\Models\Portfolio\Portfolio;
 
 class PortfolioController extends Controller
 {
@@ -27,7 +25,7 @@ class PortfolioController extends Controller
         return view('admin.portfolio.create',compact('categories'));
     }
 
-    public function store(Request $request){
+    public function store(PortfolioRequest $request){
         try{
 
             $this->portfolioService->store($request);
@@ -35,8 +33,7 @@ class PortfolioController extends Controller
 
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.portfolio.create')->with('error', 'Data failed to add');
+            return redirect()->back('admin.portfolio.create')->withErrors(['error'=> $ex->getMessage()]);
         }
     }
 
@@ -48,15 +45,15 @@ class PortfolioController extends Controller
         return $this->portfolioService->edit($id);
     }
 
-    public function update(Request $request,$id){
+    public function update(PortfolioRequest $request,$id){
         try{
             $this->portfolioService->update($request,$id);
             return redirect()->route('admin.portfolio')->with('success', 'Data updated successfully');
 
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.portfolio.edit')->with('error', 'Data failed to update');
+//            return $ex->getMessage();
+            return redirect()->route('admin.portfolio.edit')->withErrors(['error'=> $ex->getMessage()]);
         }
     }
 
@@ -67,8 +64,7 @@ class PortfolioController extends Controller
 
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.portfolio')->with('error', 'Data deleted failed');
+            return redirect()->route('admin.portfolio')->withErrors(['error'=> $ex->getMessage()]);
         }
     }
 }

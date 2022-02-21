@@ -28,7 +28,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.portfolio.create') }}" class="btn btn-success">{{ __('portfolio.Cportfolio') }}</a>
+        <a href="{{ route('admin.portfolio.create') }}" class="btn btn-success">{{ __('portfolio.Create portfolio') }}</a>
 
     </div>
 
@@ -48,7 +48,7 @@
 
                         <th>{{ __('portfolio.name') }}</th>
 
-                        <th>{{ __('portfolio.Pdate') }}</th>
+                        <th>{{ __('portfolio.Project date') }}</th>
 
                         <th>{{ __('portfolio.option') }}</th>
 
@@ -90,7 +90,7 @@
 
                                 <input type="hidden" name="_method" value="DELETE">
 
-                                <input type="submit" value="{{ __('portfolio.del') }}" class="btn btn-danger btn-sm">
+                                <input type="submit" value="{{ __('portfolio.delete') }}" class="btn btn-danger btn-sm">
 
                             </form>
 

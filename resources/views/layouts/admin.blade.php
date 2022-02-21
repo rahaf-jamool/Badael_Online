@@ -122,6 +122,16 @@
               </ul>
             </li>
 
+{{--              <ul>--}}
+{{--                  @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)--}}
+{{--                      <li>--}}
+{{--                          <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">--}}
+{{--                              {{ $properties['native'] }}--}}
+{{--                          </a>--}}
+{{--                      </li>--}}
+{{--                  @endforeach--}}
+{{--              </ul>--}}
+
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->

@@ -164,7 +164,7 @@
                     {{-- name --}}
                     <div class="form-group">
                         <label class="required" for="title">Name (AR)</label>
-                        <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name" @if($portfolio->locale == 'ar') value="{{ $portfolio->name  }}" required>
+                        <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name"  value="{{ $portfolio->translations('name','ar')  }}" required>
                         @if($errors->has('ar_name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ar_name') }}

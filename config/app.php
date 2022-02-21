@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' =>'ar',
 
     /*
     |--------------------------------------------------------------------------
@@ -103,12 +103,12 @@ return [
 | List all locales that your application works with
 |
 */
-'languages' => [
-    'English' => 'en',
-    'Arabic' => 'ar',
-    // 'Russian' => 'ru',
-    // 'French' => 'fr',
-  ],
+//'languages' => [
+//    'English' => 'en',
+//    'Arabic' => 'ar',
+//    // 'Russian' => 'ru',
+//    // 'French' => 'fr',
+//  ],
     /*
     |--------------------------------------------------------------------------
     | Faker Locale

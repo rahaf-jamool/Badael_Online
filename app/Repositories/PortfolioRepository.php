@@ -20,12 +20,12 @@ class PortfolioRepository implements RepositoryInterface{
 
     public function index()
     {
-        return $this->portfolio->orderBy('id','desc')->get();
+        return $this->portfolio::orderBy('id','desc')->get();
     }
 
     public function create()
     {
-        return $this->pcategory->get();
+        return $this->pcategory::get();
     }
 
     public function store($request)
@@ -64,7 +64,7 @@ class PortfolioRepository implements RepositoryInterface{
             ],
         ];
 
-        $this->portfolio::create($data);
+        $this->portfolio->create($data);
 
         DB::commit();
     }
@@ -83,7 +83,7 @@ class PortfolioRepository implements RepositoryInterface{
     {
         DB::beginTransaction();
 
-        $portfolio = $this->portfolio->findOrFail($id);
+        $portfolio = $this->portfolio::findOrFail($id);
         // image desktop
         $new_cover = $request->file('cover');
 
@@ -132,7 +132,7 @@ class PortfolioRepository implements RepositoryInterface{
 
     public function destroy($id)
     {
-        $portfolio = $this->portfolio->findOrFail($id);
+        $portfolio = $this->portfolio::findOrFail($id);
         $portfolio->delete();
     }
 }

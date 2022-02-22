@@ -21,18 +21,11 @@ Auth::routes([
 Route::get('/', function () {
     return view('welcome');
 });
-// change language
-//Route::get('locale/{locale}','Languages\LanguageController@changeLang');
 
 Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::prefix('admin')->middleware(['auth'])->group(function () {
 
-
-//        Route::group([
-//        'prefix' =>  LaravelLocalization::setLocale(),
-//        'middleware' => [ 'auth']
-//    ], function() {
 
         Route::group(['namespace' => 'User'], function () {
             Route::get('dashboard', 'UserController@dashboard')->name('admin.dashboard');

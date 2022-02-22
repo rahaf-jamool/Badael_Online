@@ -108,12 +108,9 @@
                 <h6>{{ __('portfolio.Select image') }}</h6>
 
             </div>
-
         </div>
-        </div>
+    </div>
 
-        {{-- change language --}}
-        <div class="container">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
               <li class="nav-link bg-aqua-active" id="englishLink"><a class="text-decoration-none" href="#english-form" role="tab" data-toggle="tab">{{__('portfolio.english')}}</a></li>
@@ -124,7 +121,7 @@
             <div class="tab-content">
               <div class="card-body tab-pane active" id="english-form">
                   {{-- name --}}
-                <div class="form-group">
+                <div class="form-group col-sm-7">
                     <label class="required" for="en_name">{{__('portfolio.Name english')}}</label>
                     <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ old('en_name', '') }}" >
                     @if($errors->has('en_name'))
@@ -134,7 +131,7 @@
                     @endif
                 </div>
                 {{-- client --}}
-                <div class="form-group">
+                <div class="form-group col-sm-7">
                     <label class="required" for="en_client">{{__('portfolio.Client english')}}</label>
                     <input class="form-control {{ $errors->has('en_client') ? 'is-invalid' : '' }}" type="text" name="en_client" id="en_client" value="{{ old('en_client', '') }}" >
                     @if($errors->has('en_client'))
@@ -144,7 +141,7 @@
                     @endif
                 </div>
                 {{-- desc --}}
-                <div class="form-group">
+                <div class="form-group col-sm-7">
                     <label class="required" for="en_desc">{{__('portfolio.Desc english')}}</label>
                     <input class="form-control {{ $errors->has('en_desc') ? 'is-invalid' : '' }}" type="text" name="en_desc" id="en_desc" value="{{ old('en_desc', '') }}" >
                     @if($errors->has('en_desc'))
@@ -156,7 +153,7 @@
               </div>
               <div class="card-body tab-pane" id="arabic-form">
                   {{-- name --}}
-                <div class="form-group">
+                <div class="form-group col-sm-7">
                     <label class="required" for="title">{{__('portfolio.Name arabic')}}</label>
                     <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name" value="{{ old('ar_name', '') }}" >
                     @if($errors->has('ar_name'))
@@ -166,7 +163,7 @@
                     @endif
                 </div>
                 {{-- client --}}
-                <div class="form-group">
+                <div class="form-group col-sm-7">
                     <label class="required" for="title">{{__('portfolio.Client arabic')}}</label>
                     <input class="form-control {{ $errors->has('ar_client') ? 'is-invalid' : '' }}" type="text" name="ar_client" id="ar_client" value="{{ old('ar_client', '') }}" >
                     @if($errors->has('ar_client'))
@@ -176,7 +173,7 @@
                     @endif
                 </div>
                 {{-- desc --}}
-                <div class="form-group">
+                <div class="form-group col-sm-7">
                     <label class="required" for="title">{{__('portfolio.Desc arabic')}}</label>
                     <input class="form-control {{ $errors->has('ar_desc') ? 'is-invalid' : '' }}" type="text" name="ar_desc" id="ar_desc" value="{{ old('ar_desc', '') }}" >
                     @if($errors->has('ar_desc'))
@@ -186,11 +183,10 @@
                     @endif
                 </div>
               </div>
-            </div>
 
         </div>
         {{-- category --}}
-        <div class="form-group ml-4">
+        <div class="form-group ml-3">
 
             <label for="category" class="col-sm-2 col-form-label">{{ __('portfolio.category') }}</label>
 
@@ -210,7 +206,7 @@
 
         </div>
 
-        <div class="form-group ml-4">
+        <div class="form-group ml-3">
 
             <label for="link" class="col-sm-2 col-form-label">{{ __('portfolio.link') }}</label>
 
@@ -226,7 +222,7 @@
 
         </div>
 
-        <div class="form-group ml-4">
+        <div class="form-group ml-3">
 
             <label for="date" class="col-sm-2 col-form-label">{{ __('portfolio.Project date') }}</label>
 
@@ -242,7 +238,7 @@
 
         </div>
 
-        <div class="form-group ml-4">
+        <div class="form-group ml-3">
 
             <div class="col-sm-3">
 

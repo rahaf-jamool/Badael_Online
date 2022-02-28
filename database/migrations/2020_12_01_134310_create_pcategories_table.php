@@ -15,7 +15,6 @@ class CreatePcategoriesTable extends Migration
     {
         Schema::create('pcategories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
             $table->timestamps();
         });
     }

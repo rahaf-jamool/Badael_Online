@@ -28,7 +28,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.portfolio.create') }}" class="btn btn-success">{{ __('portfolio.Create portfolio') }}</a>
+        <a href="{{ route('portfolios.create') }}" class="btn btn-success">{{ __('portfolio.Create portfolio') }}</a>
 
     </div>
 
@@ -82,11 +82,12 @@
 
                         <td>
 
-                            <a href="{{route('admin.portfolio.edit', [$portfolio->id])}}" class="btn btn-info btn-sm"> {{ __('portfolio.edit') }} </a>
+                            <a href="{{route('portfolios.edit', [$portfolio->id])}}" class="btn btn-info btn-sm"> {{ __('portfolio.edit') }} </a>
 
-                            <form method="POST" action="{{route('admin.portfolio.destroy', [$portfolio->id])}}" class="d-inline" onsubmit="return confirm('Delete this portfolio permanently?')">
+                            <form method="POST" action="{{route('portfolios.destroy', [$portfolio->id])}}" class="d-inline" onsubmit="return confirm('Delete this portfolio permanently?')">
 
                                 @csrf
+                                @method('DELETE')
 
                                 <input type="hidden" name="_method" value="DELETE">
 

@@ -21,7 +21,6 @@ class CreatePortfolioTranslationsTable extends Migration
             $table->string('client');
             $table->longText('desc');
             $table->timestamps();
-
             $table->unique(['portfolio_id','locale']);
         });
     }

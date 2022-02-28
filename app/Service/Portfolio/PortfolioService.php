@@ -3,40 +3,41 @@
 namespace App\Service\Portfolio;
 
 use App\Repositories\Interfaces\RepositoryInterface;
+use App\Repositories\PortfolioRepository;
 use Illuminate\Http\Request;
 
 class PortfolioService
 {
-    private $repositoryInterface;
-    public function __construct(RepositoryInterface $repositoryInterface)
+    private $portfolioRepository;
+    public function __construct(PortfolioRepository $portfolioRepository)
     {
-        $this->repositoryInterface = $repositoryInterface;
+        $this->portfolioRepository = $portfolioRepository;
     }
     public function index(){
-        return $this->repositoryInterface->index();
+        return $this->portfolioRepository->index();
     }
 
     public function create(){
-        return $this->repositoryInterface->create();
+        return $this->portfolioRepository->create();
     }
 
     public function store($request){
-        return $this->repositoryInterface->store($request);
+        return $this->portfolioRepository->store($request);
     }
 
     public function show($id){
-        return $this->repositoryInterface->show($id);
+        return $this->portfolioRepository->show($id);
     }
 
     public function edit($id){
-        return $this->repositoryInterface->edit($id);
+        return $this->portfolioRepository->edit($id);
     }
 
     public function update($request,$id){
-        return $this->repositoryInterface->update($request,$id);
+        return $this->portfolioRepository->update($request,$id);
     }
 
     public function destroy($id){
-        return $this->repositoryInterface->destroy($id);
+        return $this->portfolioRepository->destroy($id);
     }
 }

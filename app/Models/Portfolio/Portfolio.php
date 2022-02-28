@@ -11,13 +11,10 @@ class Portfolio extends Model implements TranslatableContract
     use HasFactory,Translatable;
     protected $primaryKey = 'id';
     protected $table='portfolios';
-
     protected $hidden = [
         'created_at', 'updated_at'
     ];
-
     public $translatedAttributes = ['name', 'client','desc'];
-
     protected $fillable = [
         'slug',
         'pcategory_id',
@@ -26,7 +23,6 @@ class Portfolio extends Model implements TranslatableContract
         'link',
         'date',
     ];
-
     public function PortfolioTranslation()
     {
         return $this->hasMany(PortfolioTranslation::class , 'portfolio_id');

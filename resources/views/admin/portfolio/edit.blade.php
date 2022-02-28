@@ -53,8 +53,9 @@
 </div>
 @endif
 
-<form action="{{ route('admin.portfolio.update',$portfolio->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('portfolios.update',$portfolio->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
 
     <div class="form-group m-4">
         <h2>{{__('portfolio.Update portfolio')}}</h2>
@@ -122,7 +123,7 @@
                     {{-- name --}}
                     <div class="form-group col-sm-7">
                         <label class="required" for="en_name">{{__('portfolio.Name english')}}</label>
-                        <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ $portfolio->getAttribute('name','en') }}" required>
+                        <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ $portfolio->getAttribute('name:en') }}" required>
                         @if($errors->has('en_name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('en_name') }}

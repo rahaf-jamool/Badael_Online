@@ -80,8 +80,8 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('admin.portfolio') }}">{{ __('home.portfolio') }}</a>
-            <a class="collapse-item" href="{{ route('admin.pcategory') }}">{{ __('home.portfoliocate') }}</a>
+            <a class="collapse-item" href="{{ route('portfolios.index') }}">{{ __('home.portfolio') }}</a>
+            <a class="collapse-item" href="{{ route('portfoliocategories.index') }}">{{ __('home.portfoliocate') }}</a>
           </div>
         </div>
       </li>

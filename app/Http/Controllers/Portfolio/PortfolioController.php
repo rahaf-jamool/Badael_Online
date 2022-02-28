@@ -29,11 +29,11 @@ class PortfolioController extends Controller
         try{
 
             $this->portfolioService->store($request);
-            return redirect()->route('admin.portfolio')->with('success', 'Data added successfully');
+            return redirect()->route('portfolios.index')->with('success', 'Data added successfully');
 
         }catch(\Exception $ex){
             DB::rollback();
-            return redirect()->back('admin.portfolio.create')->withErrors(['error'=> $ex->getMessage()]);
+            return redirect()->back('portfolios.create')->withErrors(['error'=> $ex->getMessage()]);
         }
     }
 
@@ -51,22 +51,23 @@ class PortfolioController extends Controller
     public function update(PortfolioRequest $request,$id){
         try{
             $this->portfolioService->update($request,$id);
-            return redirect()->route('admin.portfolio')->with('success', 'Data updated successfully');
+            return redirect()->route('portfolios.index')->with('success', 'Data updated successfully');
 
         }catch(\Exception $ex){
             DB::rollback();
-            return redirect()->route('admin.portfolio.edit')->withErrors(['error'=> $ex->getMessage()]);
+//            return $ex->getMessage();
+            return redirect()->route('portfolios.edit')->withErrors(['error'=> $ex->getMessage()]);
         }
     }
 
     public function destroy($id){
         try{
             $this->portfolioService->destroy($id);
-            return redirect()->route('admin.portfolio')->with('success', 'Data deleted successfully');
+            return redirect()->route('portfolios.index')->with('success', 'Data deleted successfully');
 
         }catch(\Exception $ex){
             DB::rollback();
-            return redirect()->route('admin.portfolio')->withErrors(['error'=> $ex->getMessage()]);
+            return redirect()->route('portfolios.index')->withErrors(['error'=> $ex->getMessage()]);
         }
     }
 }

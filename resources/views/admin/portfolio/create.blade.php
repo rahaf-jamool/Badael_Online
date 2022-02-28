@@ -54,7 +54,7 @@
 </div>
 @endif
 
-<form action="{{ route('admin.portfolio.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('portfolios.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <div class="form-group m-4">

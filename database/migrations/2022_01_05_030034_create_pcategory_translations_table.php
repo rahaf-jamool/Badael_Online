@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubscribersTable extends Migration
+class CreatePcategoryTranslationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateSubscribersTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscribers', function (Blueprint $table) {
+        Schema::create('pcategory_translations', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
+            $table->foreignId('pcategory_id')->constrained()->onDelete('cascade');
+            $table->string ('locale')->index ();
+            $table->string('name');
             $table->timestamps();
+            $table->unique(['pcategory_id' , 'locale']);
         });
     }
 
@@ -27,6 +30,6 @@ class CreateSubscribersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscribers');
+        Schema::dropIfExists('pcategory_translations');
     }
 }

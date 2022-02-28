@@ -22,5 +22,8 @@
         "sass-loader": "^8.0.0",
         "vue-template-compiler": "^2.6.12",
         "webpack-cli": "^4.2.0"
+    },
+    "dependencies": {
+        "prettier": "^2.5.1"
     }
 }

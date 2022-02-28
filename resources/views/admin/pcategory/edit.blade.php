@@ -8,56 +8,40 @@
 </div>
 @endif
 
-@section('styles')
-<style>
-.rowInput {
-    display: flex;
-    gap: 15px;
-}
-.selectLang {
-    margin-top: 38px;
-}
-</style>
-@endsection
 
-<form action="{{ route('admin.pcategory.update',$pcategory->id) }}" method="POST">
+<form action="{{ route('portfoliocategories.update',$pcategory->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
 
     <div class="container">
 
-        {{-- name --}}
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-link bg-aqua-active" id="englishLink"><a class="text-decoration-none" href="#english-form" role="tab" data-toggle="tab">{{__('portfolio.english')}}</a></li>
+            <li class="nav-link" id="arabicLink"><a class="text-decoration-none" href="#arabic-form" role="tab" data-toggle="tab">{{__('portfolio.arabic')}}</a></li>
+        </ul>
 
-        <div class="form-group ml-2 col-sm-7">
-            <div class="rowInput">
-    
-                <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('pcategory.Nenglish') }}</label>
-                    
-                    <input type="text" name='pcategory[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $pcategory->name}}" id="name" placeholder="Name">
-                    <input type="text" name='pcategory[en][local]' value='en' hidden>
-    
-                    @error('pcategory.en.name')
-                        <small class="form-text text-danger"> {{ $message }}</small>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="card-body tab-pane active" id="english-form">
+                {{-- name --}}
+                <div class="form-group col-sm-7">
+                    <label class="col-sm-6 col-form-label" for="en_name">{{ __('pcategory.Nenglish') }}</label>
+                    <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text" name="en_name" id="en_name" value="{{ $pcategory->getAttribute('name:en') }}" required>
+                    @error('en_name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
                     @enderror
                 </div>
-    
-                <div class="ar col-sm-9">
-                    <label class="col-sm-6 col-form-label">{{ __('pcategory.Narabic') }}</label>
-    
-                    <input type="text" name='pcategory[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $pcategory->name}}" id="name" placeholder="Name">
-                    <input type="text" name='pcategory[ar][local]' value='ar' hidden>
-
-                    @error('pcategory.ar.name')
-                        <small class="form-text text-danger"> {{ $message }}</small>
+            </div>
+            <div class="card-body tab-pane" id="arabic-form">
+                {{-- name --}}
+                <div class="form-group col-sm-7">
+                    <label class="col-sm-6 col-form-label" for="ar_name">{{ __('pcategory.Narabic') }}</label>
+                    <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text" name="ar_name" id="ar_name" value="{{ $pcategory->getAttribute('name:ar') }}" required>
+                    @error('ar_name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
                     @enderror
                 </div>
-    
-                <select class="form-control col-sm-2 selectLang" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
-    
             </div>
         </div>
 
@@ -76,33 +60,3 @@
   </form>
 @endsection
 
-@push('scripts')
-<script>
-    // language
-    window.onload = function () {
-        if(localStorage.getItem('local') == 'en'){
-                $('.ar').css({display: "none"});
-                $('.en').css({display: "block"});
-        }else{
-                $('.ar').css({display: "block"});
-                $('.en').css({display: "none"});
-        }
-    }
-
-    $(function () {
-        $(".selectLang").change(function() {
-            var val = $(this).val();
-            localStorage.setItem('local',val);
-            if(localStorage.getItem('local') == 'en'){
-                $('.ar').css({display: "none"});
-                $('.en').css({display: "block"});
-        }else{
-                $('.ar').css({display: "block"});
-                $('.en').css({display: "none"});
-        }
-        });
-    });
-
-</script>
-
-@endpush

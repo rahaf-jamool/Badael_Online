@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Pcategory;
+namespace App\Http\Controllers\PortfolioCategory;
 
 use App\Http\Controllers\Controller;
-use App\Service\Pcategory\PcategoryService;
+use App\Service\PortfolioCategory\PortfolioCategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PCategoryController extends Controller
+class PortfolioCategoryController extends Controller
 {
     private $pcategoryService;
-    public function __construct(PcategoryService $pcategoryService)
+    public function __construct(PortfolioCategoryService $pcategoryService)
     {
         $this->pcategoryService=$pcategoryService;
     }
@@ -21,14 +21,13 @@ class PCategoryController extends Controller
 
     public function store(Request $request){
         try{
-
             $this->pcategoryService->store($request);
-            return redirect()->route('admin.pcategory')->with('success', 'Data added successfully');
+            return redirect()->route('portfoliocategories.index')->with('success', 'Data added successfully');
 
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
-            return redirect()->route('admin.pcategory')->with('error', 'Data failed to add');
+//            return $ex->getMessage();
+            return redirect()->route('portfoliocategories.create')->withErrors(['error'=> $ex->getMessage()]);
         }
     }
 
@@ -44,23 +43,23 @@ class PCategoryController extends Controller
     public function update(Request $request,$id){
         try{
             $this->pcategoryService->update($request,$id);
-            return redirect()->route('admin.pcategory')->with('success', 'Data updated successfully');
+            return redirect()->route('portfoliocategories.index')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
             // return $ex->getMessage();
-            return redirect()->route('admin.pcategory.create')->with('error', 'Data failed to update');
+            return redirect()->route('portfoliocategories.edit')->withErrors(['error'=> $ex->getMessage()]);
         }
     }
 
     public function destroy($id){
         try{
             $this->pcategoryService->destroy($id);
-            return redirect()->route('admin.pcategory')->with('success', 'Data deleted successfully');
+            return redirect()->route('portfoliocategories.index')->with('success', 'Data deleted successfully');
 
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.pcategory')->with('error', 'Data deleted failed');
+//            return $ex->getMessage();
+            return redirect()->route('portfoliocategories.index')->withErrors(['error'=> $ex->getMessage()]);
         }
     }
 }

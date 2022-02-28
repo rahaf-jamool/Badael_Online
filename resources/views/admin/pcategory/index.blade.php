@@ -35,41 +35,26 @@
 
     <div class="card-header py-3">
 
-        <form class="form-inline" action="{{ route('admin.pcategory.store') }}" method="POST">
+        <form class="form-inline" action="{{ route('portfoliocategories.store') }}" method="POST">
             @csrf
-
-            <div class="form-group ml-2 col-sm-7">
-                <div class="rowInput">
-        
-                    <div class="en col-sm-9">        
-                        <input type="text" name='pcategory[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="{{ __('pcategory.Nenglish') }}">
-                        <input type="text" name='pcategory[en][local]' value='en' hidden>
-        
-                        @error('pcategory.en.name')
-                            <small class="form-text text-danger"> {{ $message }}</small>
+            <div class="form-group col-sm-7">
+                    <div>
+                        <label class="required" for="en_name">{{__('portfolio.Name english')}}</label>
+                        <input type="text" name='en_name' class="form-control {{$errors->first('en_name') ? "is-invalid" : "" }} " value="{{old('en_name')}}" id="en_name">
+                        @error('en_name')
+                        <small class="form-text text-danger"> {{ $message }}</small>
                         @enderror
                     </div>
-        
-                    <div class="ar col-sm-9">        
-                        <input type="text" name='pcategory[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="{{ __('pcategory.Narabic') }}">
-                        <input type="text" name='pcategory[ar][local]' value='ar' hidden>
-        
-                        @error('pcategory.ar.name')
-                            <small class="form-text text-danger"> {{ $message }}</small>
+                    <div class="ml-2">
+                        <label class="required" for="ar_name">{{__('portfolio.Name arabic')}}</label>
+                        <input type="text" name='ar_name' class="form-control {{$errors->first('ar_name') ? "is-invalid" : "" }} " value="{{old('ar_name')}}" id="ar_name">
+                        @error('ar_name')
+                        <small class="form-text text-danger"> {{ $message }}</small>
                         @enderror
                     </div>
-        
-                    <select class="form-control col-sm-4 selectLang" id="selectLang">
-                        @foreach(config('app.languages') as $index => $lang)
-                        <option id="lang">{{ $lang }}</option>
-                        @endforeach
-                    </select>
-        
-                </div>
+                <button type="submit" class="btn btn-primary ml-4 mt-4">{{ __('pcategory.create') }}</button>
             </div>
-
-            <button type="submit" class="btn btn-primary mb-2">{{ __('pcategory.create') }}</button>
-          </form>
+        </form>
 
     </div>
 
@@ -111,11 +96,12 @@
 
                         <td>
 
-                            <a href="{{route('admin.pcategory.edit', [$pcategory->id])}}" class="btn btn-info btn-sm"> {{ __('pcategory.edit') }} </a>
+                            <a href="{{route('portfoliocategories.edit', [$pcategory->id])}}" class="btn btn-info btn-sm"> {{ __('pcategory.edit') }} </a>
 
-                            <form method="POST" action="{{route('admin.pcategory.destroy', [$pcategory->id])}}" class="d-inline" onsubmit="return confirm('Delete this pcategory permanently?')">
+                            <form method="POST" action="{{route('portfoliocategories.destroy', [$pcategory->id])}}" class="d-inline" onsubmit="return confirm('Delete this pcategory permanently?')">
 
                                 @csrf
+                                @method('DELETE')
 
                                 <input type="hidden" name="_method" value="DELETE">
 
@@ -149,34 +135,4 @@
 
 <script src="{{ asset('admin/js/demo/datatables-demo.js') }}"></script>
 
-@endpush
-
-@push('scripts')
-
-<script>
-  // language
-  window.onload = function () {
-        if(localStorage.getItem('local') == 'en'){
-                $('.ar').css({display: "none"});
-                $('.en').css({display: "block"});
-        }else{
-                $('.ar').css({display: "block"});
-                $('.en').css({display: "none"});
-        }
-    }
-
-    $(function () {
-        $(".selectLang").change(function() {
-            var val = $(this).val();
-            localStorage.setItem('local',val);
-            if(localStorage.getItem('local') == 'en'){
-                $('.ar').css({display: "none"});
-                $('.en').css({display: "block"});
-        }else{
-                $('.ar').css({display: "block"});
-                $('.en').css({display: "none"});
-        }
-        });
-    });
-</script>
 @endpush

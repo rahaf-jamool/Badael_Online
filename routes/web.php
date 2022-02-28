@@ -32,23 +32,14 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         });
 
         // Manage Portfolio Categories
-        Route::group(['prefix' => 'portfolio-categories', 'namespace' => 'Pcategory'], function () {
-            Route::get('/', 'PcategoryController@index')->name('admin.pcategory');
-            Route::post('/', 'PcategoryController@store')->name('admin.pcategory.store');
-            Route::get('/edit/{id}', 'PcategoryController@edit')->name('admin.pcategory.edit');
-            Route::post('/edit/{id}', 'PcategoryController@update')->name('admin.pcategory.update');
-            Route::delete('/destroy/{id}', 'PcategoryController@destroy')->name('admin.pcategory.destroy');
+        Route::group([ 'namespace' => 'PortfolioCategory'], function () {
+            Route::resource ('portfoliocategories','PortfolioCategoryController');
         });
         // Manage Portfolio
-        Route::group(['prefix' => 'portfolio', 'namespace' => 'Portfolio'], function () {
-            Route::get('/', 'PortfolioController@index')->name('admin.portfolio');
-            Route::get('/create', 'PortfolioController@create')->name('admin.portfolio.create');
-            Route::post('/create', 'PortfolioController@store')->name('admin.portfolio.store');
-            Route::get('/edit/{id}', 'PortfolioController@edit')->name('admin.portfolio.edit');
-            Route::post('/edit/{id}', 'PortfolioController@update')->name('admin.portfolio.update');
-            Route::delete('/destroy/{id}', 'PortfolioController@destroy')->name('admin.portfolio.destroy');
+        Route::group(['namespace' => 'Portfolio'], function () {
+            Route::resource ('portfolios','PortfolioController');
         });
-        //  // Manage Admin
+        // Manage Admin
         Route::group(['prefix' => 'users', 'namespace' => 'User'], function () {
             Route::get('/', 'UserController@index')->name('admin.user');
             Route::get('/create', 'UserController@create')->name('admin.user.create');

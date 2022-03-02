@@ -4,11 +4,13 @@ namespace App\Http\Controllers\PortfolioCategory;
 
 use App\Http\Controllers\Controller;
 use App\Service\PortfolioCategory\PortfolioCategoryService;
+use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PortfolioCategoryController extends Controller
 {
+    use GeneralTrait;
     private $pcategoryService;
     public function __construct(PortfolioCategoryService $pcategoryService)
     {
@@ -22,12 +24,10 @@ class PortfolioCategoryController extends Controller
     public function store(Request $request){
         try{
             $this->pcategoryService->store($request);
-            return redirect()->route('portfoliocategories.index')->with('success', 'Data added successfully');
-
+            return $this->SuccessMessage('portfoliocategories.index',' added' );
         }catch(\Exception $ex){
             DB::rollback();
-//            return $ex->getMessage();
-            return redirect()->route('portfoliocategories.create')->withErrors(['error'=> $ex->getMessage()]);
+            return $this->ErrorMessage('portfoliocategories.create', $ex->getMessage());
         }
     }
 
@@ -43,23 +43,20 @@ class PortfolioCategoryController extends Controller
     public function update(Request $request,$id){
         try{
             $this->pcategoryService->update($request,$id);
-            return redirect()->route('portfoliocategories.index')->with('success', 'Data updated successfully');
+            return $this->SuccessMessage('portfoliocategories.index',' updated' );
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
-            return redirect()->route('portfoliocategories.edit')->withErrors(['error'=> $ex->getMessage()]);
+            return $this->ErrorMessage('portfoliocategories.edit', $ex->getMessage());
         }
     }
 
     public function destroy($id){
         try{
             $this->pcategoryService->destroy($id);
-            return redirect()->route('portfoliocategories.index')->with('success', 'Data deleted successfully');
-
+            return $this->SuccessMessage('portfoliocategories.index',' deleted' );
         }catch(\Exception $ex){
             DB::rollback();
-//            return $ex->getMessage();
-            return redirect()->route('portfoliocategories.index')->withErrors(['error'=> $ex->getMessage()]);
+            return $this->ErrorMessage('portfoliocategories.index', $ex->getMessage());
         }
     }
 }

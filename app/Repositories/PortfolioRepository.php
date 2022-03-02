@@ -45,7 +45,7 @@ class PortfolioRepository implements RepositoryInterface{
             'slug' => $slug,
             'pcategory_id' => $request->input('category'),
             'mobileImage' => $mobileImage_path,
-            'cover' => $cover_path,
+            'cover' => $this->upload( $request->file('cover')),
             'link' => $request->input('link'),
             'date' => $request->input('date'),
             'en' => [
@@ -122,4 +122,14 @@ class PortfolioRepository implements RepositoryInterface{
         $portfolio = $this->portfolio->findOrFail($id);
         $portfolio->delete();
     }
+
+    public function uploadImage($image){
+        $file = public_path('images/portfolio', 'public');
+        $image->move($file);
+    }
+
+//    public function uploadImageMobile($image,$file){
+//        public_path('images/portfolio', 'public');
+//        $image->move($file);
+//    }
 }

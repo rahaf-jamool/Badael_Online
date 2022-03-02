@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Portfolio;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Portfolio\PortfolioRequest;
 use App\Service\Portfolio\PortfolioService;
+use App\Traits\GeneralTrait;
 use Illuminate\Support\Facades\DB;
 
 class PortfolioController extends Controller
 {
+    use GeneralTrait;
     private $portfolioService;
     public function __construct(PortfolioService $portfolioService)
     {
@@ -29,11 +31,10 @@ class PortfolioController extends Controller
         try{
 
             $this->portfolioService->store($request);
-            return redirect()->route('portfolios.index')->with('success', 'Data added successfully');
-
+            return $this->SuccessMessage('portfolios.index',' added' );
         }catch(\Exception $ex){
             DB::rollback();
-            return redirect()->back('portfolios.create')->withErrors(['error'=> $ex->getMessage()]);
+            return $this->ErrorMessage('portfolios.create', $ex->getMessage());
         }
     }
 
@@ -45,29 +46,26 @@ class PortfolioController extends Controller
         $portfolio = $this->portfolioService->edit($id);
         $categories = $this->portfolioService->create();
         return view('admin.portfolio.edit',compact('portfolio','categories'));
-
     }
 
     public function update(PortfolioRequest $request,$id){
         try{
             $this->portfolioService->update($request,$id);
-            return redirect()->route('portfolios.index')->with('success', 'Data updated successfully');
-
+            return $this->SuccessMessage('portfolios.index',' updated' );
         }catch(\Exception $ex){
             DB::rollback();
-//            return $ex->getMessage();
-            return redirect()->route('portfolios.edit')->withErrors(['error'=> $ex->getMessage()]);
+            return $this->ErrorMessage('portfolios.edit', $ex->getMessage());
         }
     }
 
     public function destroy($id){
         try{
             $this->portfolioService->destroy($id);
-            return redirect()->route('portfolios.index')->with('success', 'Data deleted successfully');
+            return $this->SuccessMessage('portfolios.index',' deleted' );
 
         }catch(\Exception $ex){
             DB::rollback();
-            return redirect()->route('portfolios.index')->withErrors(['error'=> $ex->getMessage()]);
+            return $this->ErrorMessage('portfolios.index', $ex->getMessage());
         }
     }
 }

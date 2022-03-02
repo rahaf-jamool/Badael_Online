@@ -45,7 +45,7 @@ class PortfolioRepository implements RepositoryInterface{
             'slug' => $slug,
             'pcategory_id' => $request->input('category'),
             'mobileImage' => $mobileImage_path,
-            'cover' => $this->upload( $request->file('cover')),
+            'cover' => $cover_path,
             'link' => $request->input('link'),
             'date' => $request->input('date'),
             'en' => [

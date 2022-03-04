@@ -71,23 +71,6 @@ class PortfolioRepository implements RepositoryInterface{
     {
         DB::beginTransaction();
         $portfolio = $this->portfolio->findOrFail($id);
-//        // image desktop
-//        $new_cover = $request->file('cover');
-//        if($new_cover){
-//            if($portfolio->cover && file_exists(storage_path('app/public/' .$portfolio->cover))){
-//                Storage::delete('public/'. $portfolio->cover);
-//            }
-//            $new_cover_path = $new_cover->store('images/portfolio', 'public');
-//
-//        }
-//        // image mobile
-//        $new_mobileImage = $request->file('mobileImage');
-//        if($new_mobileImage){
-//            if($portfolio->mobileImage && file_exists(storage_path('app/public/' . $portfolio->mobileImage))){
-//                Storage::delete('public/'. $portfolio->mobileImage);
-//            }
-//            $new_mobileImage_path = $new_mobileImage->store('images/portfolio', 'public');
-//        }
         $slug = $request->en_name;
         $data = [
             'slug' => $slug,

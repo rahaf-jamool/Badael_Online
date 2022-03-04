@@ -5,8 +5,10 @@ namespace App\Repositories;
 use App\Models\Portfolio\Portfolio;
 use App\Models\PortfolioCategory\Pcategory;
 use App\Repositories\Interfaces\RepositoryInterface;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PortfolioRepository implements RepositoryInterface{
 
@@ -31,31 +33,23 @@ class PortfolioRepository implements RepositoryInterface{
 
     public function store($request)
     {
-        DB::beginTransaction();
-        $cover = $request->file('cover');
-        if($cover){
-            $cover_path = $cover->store('images/portfolio', 'public');
-        }
-        $mobileImage = $request->file('mobileImage');
-        if($mobileImage){
-            $mobileImage_path = $mobileImage->store('images/portfolio', 'public');
-        }
+        DB::beginTransaction ();
         $slug = $request->en_name;
         $data = [
             'slug' => $slug,
-            'pcategory_id' => $request->input('category'),
-            'mobileImage' => $mobileImage_path,
-            'cover' => $cover_path,
-            'link' => $request->input('link'),
-            'date' => $request->input('date'),
+            'pcategory_id' => $request->input ('category'),
+            'mobileImage' => $this->uploadImage ($request->file ('mobileImage'),'images/portfolio','public'),
+            'cover' => $this->uploadImage ($request->file ('cover'),'images/portfolio','public'),
+            'link' => $request->input ('link'),
+            'date' => $request->input ('date'),
             'en' => [
-                'name' => $request->input('en_name'),
-                'client' => $request->input('en_client'),
-                'desc' => $request->input('en_desc'),
+                'name' => $request->input ('en_name'),
+                'client' => $request->input ('en_client'),
+                'desc' => $request->input ('en_desc'),
             ],
             'ar' => [
-                'name' => $request->input('ar_name'),
-                'client' => $request->input('ar_client'),
+                'name' => $request->input ('ar_name'),
+                'client' => $request->input ('ar_client'),
                 'desc' => $request->input('ar_desc'),
             ],
         ];
@@ -77,29 +71,29 @@ class PortfolioRepository implements RepositoryInterface{
     {
         DB::beginTransaction();
         $portfolio = $this->portfolio->findOrFail($id);
-        // image desktop
-        $new_cover = $request->file('cover');
-        if($new_cover){
-            if($portfolio->cover && file_exists(storage_path('app/public/' .$portfolio->cover))){
-                Storage::delete('public/'. $portfolio->cover);
-            }
-            $new_cover_path = $new_cover->store('images/portfolio', 'public');
-
-        }
-        // image mobile
-        $new_mobileImage = $request->file('mobileImage');
-        if($new_mobileImage){
-            if($portfolio->mobileImage && file_exists(storage_path('app/public/' . $portfolio->mobileImage))){
-                Storage::delete('public/'. $portfolio->mobileImage);
-            }
-            $new_mobileImage_path = $new_mobileImage->store('images/portfolio', 'public');
-        }
+//        // image desktop
+//        $new_cover = $request->file('cover');
+//        if($new_cover){
+//            if($portfolio->cover && file_exists(storage_path('app/public/' .$portfolio->cover))){
+//                Storage::delete('public/'. $portfolio->cover);
+//            }
+//            $new_cover_path = $new_cover->store('images/portfolio', 'public');
+//
+//        }
+//        // image mobile
+//        $new_mobileImage = $request->file('mobileImage');
+//        if($new_mobileImage){
+//            if($portfolio->mobileImage && file_exists(storage_path('app/public/' . $portfolio->mobileImage))){
+//                Storage::delete('public/'. $portfolio->mobileImage);
+//            }
+//            $new_mobileImage_path = $new_mobileImage->store('images/portfolio', 'public');
+//        }
         $slug = $request->en_name;
         $data = [
             'slug' => $slug,
             'pcategory_id' => $request->input('category'),
-            'mobileImage' => $new_mobileImage_path,
-            'cover' => $new_cover_path,
+            'mobileImage' => $this->UpdateUploadImage ($request->file('mobileImage'),'images/portfolio','public'),
+            'cover' => $this->UpdateUploadImage ($request->file('cover'),'images/portfolio','public'),
             'link' => $request->input('link'),
             'date' => $request->input('date'),
             'en' => [
@@ -113,23 +107,28 @@ class PortfolioRepository implements RepositoryInterface{
                 'desc' => $request->input('ar_desc'),
             ],
         ];
-        $portfolio->update($data);
-        DB::commit();
+        $portfolio->update ($data);
+        DB::commit ();
     }
 
-    public function destroy($id)
+    public function destroy ($id)
     {
-        $portfolio = $this->portfolio->findOrFail($id);
-        $portfolio->delete();
+        $portfolio = $this->portfolio->findOrFail ($id);
+        $portfolio->delete ();
     }
 
-    public function uploadImage($image){
-        $file = public_path('images/portfolio', 'public');
-        $image->move($file);
+    public function uploadImage ($image,$path,$directory)
+    {
+        $filename = $image->store($path, $directory);
+        return $filename;
     }
 
-//    public function uploadImageMobile($image,$file){
-//        public_path('images/portfolio', 'public');
-//        $image->move($file);
-//    }
+    public function UpdateUploadImage ($image,$path,$directory)
+    {
+        if($image && file_exists(storage_path('app/public/' .$image))){
+            Storage::delete('public/'. $image);
+        }
+        $new_image = $image->store($path, $directory);
+        return $new_image;
+    }
 }

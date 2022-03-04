@@ -189,7 +189,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         // repositry
-        App\Providers\RepositoryServiceProvider::class
+        App\Providers\RepositoryServiceProvider::class,
+
+        //image
+        Intervention\Image\ImageServiceProvider::class
+
     ],
 
     /*
@@ -242,6 +246,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        //image
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

@@ -22,11 +22,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix(LaravelLocalization::setLocale())->group(function () {
+Route::prefix(LaravelLocalization::setLocale())
+    ->middleware(['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'])
+    ->group(function () {
 
     Route::prefix('admin')->middleware(['auth'])->group(function () {
-
-
         Route::group(['namespace' => 'User'], function () {
             Route::get('dashboard', 'UserController@dashboard')->name('admin.dashboard');
         });
@@ -48,7 +48,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::post('/edit/{id}', 'UserController@update')->name('admin.user.update');
             Route::delete('/destroy/{id}', 'UserController@destroy')->name('admin.user.destroy');
             Route::post('/{id}', 'UserController@changepassword')->name('admin.user.changepassword');
-
         });
     });
 });

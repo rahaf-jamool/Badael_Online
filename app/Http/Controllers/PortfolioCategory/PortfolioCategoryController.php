@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PortfolioCategory;
 
 use App\Http\Controllers\Controller;
+use App\Models\PortfolioCategory\Pcategory;
 use App\Service\PortfolioCategory\PortfolioCategoryService;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;

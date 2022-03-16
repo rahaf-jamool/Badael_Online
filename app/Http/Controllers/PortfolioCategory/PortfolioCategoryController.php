@@ -32,18 +32,17 @@ class PortfolioCategoryController extends Controller
         }
     }
 
-    public function show($id){
-        return $this->pcategoryService->show($id);
+    public function show(){
     }
 
-    public function edit($id){
-        $pcategory = $this->pcategoryService->edit($id);
+    public function edit($portfolioCategory){
+        $pcategory = $this->pcategoryService->edit($portfolioCategory);
         return view('admin.pcategory.edit',compact('pcategory'));
     }
 
-    public function update(Request $request,$id){
+    public function update(Request $request,$portfolioCategory){
         try{
-            $this->pcategoryService->update($request,$id);
+            $this->pcategoryService->update($request,$portfolioCategory);
             return $this->SuccessMessage('portfoliocategories.index',' updated' );
         }catch(\Exception $ex){
             DB::rollback();
@@ -51,9 +50,9 @@ class PortfolioCategoryController extends Controller
         }
     }
 
-    public function destroy($id){
+    public function destroy($portfolioCategory){
         try{
-            $this->pcategoryService->destroy($id);
+            $this->pcategoryService->destroy($portfolioCategory);
             return $this->SuccessMessage('portfoliocategories.index',' deleted' );
         }catch(\Exception $ex){
             DB::rollback();

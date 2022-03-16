@@ -3,9 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\PortfolioCategory\Pcategory;
+use App\Repositories\Interfaces\PortfolioCategoryRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
-class PortfolioCategoryRepository implements Interfaces\RepositoryInterface
+class PortfolioCategoryRepository implements PortfolioCategoryRepositoryInterface
 {
     private $portfolioCategory;
     public function __construct(Pcategory $portfolioCategory)
@@ -38,19 +39,19 @@ class PortfolioCategoryRepository implements Interfaces\RepositoryInterface
         DB::commit();
     }
 
-    public function show($id)
+    public function show()
     {
         //
     }
 
-    public function edit($id)
+    public function edit($portfolioCategory)
     {
-        return $this->portfolioCategory::findOrFail($id);
+        return $this->portfolioCategory::findOrFail($portfolioCategory);
     }
 
-    public function update($request,$id)
+    public function update($request,$portfolioCategory)
     {
-        $portfolioCategory = $this->portfolioCategory::findOrFail($id);
+        $portfolioCategory = $this->portfolioCategory::findOrFail($portfolioCategory);
         DB::beginTransaction();
         $data = [
             'en' => [
@@ -64,9 +65,9 @@ class PortfolioCategoryRepository implements Interfaces\RepositoryInterface
         DB::commit();
     }
 
-    public function destroy($id)
+    public function destroy($portfolioCategory)
     {
-        $pcategory = $this->portfolioCategory::findOrFail($id);
+        $pcategory = $this->portfolioCategory::findOrFail($portfolioCategory);
         $pcategory->delete();
     }
 }

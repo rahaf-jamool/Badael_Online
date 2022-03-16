@@ -4,13 +4,6 @@
 
 <link href="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
-<style>
-    .rowInput {
-        display: flex;
-        gap: 15px;
-    }
-</style>
-
 @endsection
 
 @section('content')
@@ -39,14 +32,14 @@
             @csrf
             <div class="form-group col-sm-7">
                     <div>
-                        <label class="required" for="en_name">{{__('portfolio.Name english')}}</label>
+                        <label class="required" for="en_name">{{__('pcategory.Name english')}}</label>
                         <input type="text" name='en_name' class="form-control {{$errors->first('en_name') ? "is-invalid" : "" }} " value="{{old('en_name')}}" id="en_name">
                         @error('en_name')
                         <small class="form-text text-danger"> {{ $message }}</small>
                         @enderror
                     </div>
                     <div class="ml-2">
-                        <label class="required" for="ar_name">{{__('portfolio.Name arabic')}}</label>
+                        <label class="required" for="ar_name">{{__('pcategory.Name arabic')}}</label>
                         <input type="text" name='ar_name' class="form-control {{$errors->first('ar_name') ? "is-invalid" : "" }} " value="{{old('ar_name')}}" id="ar_name">
                         @error('ar_name')
                         <small class="form-text text-danger"> {{ $message }}</small>
@@ -96,9 +89,9 @@
 
                         <td>
 
-                            <a href="{{route('portfoliocategories.edit', [$pcategory->id])}}" class="btn btn-info btn-sm"> {{ __('pcategory.edit') }} </a>
+                            <a href="{{route('portfoliocategories.edit', [$pcategory])}}" class="btn btn-info btn-sm"> {{ __('pcategory.edit') }} </a>
 
-                            <form method="POST" action="{{route('portfoliocategories.destroy', [$pcategory->id])}}" class="d-inline" onsubmit="return confirm('Delete this pcategory permanently?')">
+                            <form method="POST" action="{{route('portfoliocategories.destroy', [$pcategory])}}" class="d-inline" onsubmit="return confirm('Delete this pcategory permanently?')">
 
                                 @csrf
                                 @method('DELETE')

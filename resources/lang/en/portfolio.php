@@ -32,12 +32,8 @@ return [
     'category' => 'Categories',
     'Choose one' => 'Choose One!',
     'link' => 'Link',
-    'Name arabic' => 'Name Arabic',
-    'Name english' => 'Name English',
-    'Client arabic' => 'Client Arabic',
-    'Client english' => 'Client English',
-    'Desc arabic' => 'Description Arabic',
-    'Desc english' => 'Description English',
+    'client' => 'Client',
+    'desc' => 'Description',
     'create' => 'Create',
 
     //update

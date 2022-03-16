@@ -4,13 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Portfolio\Portfolio;
 use App\Models\PortfolioCategory\Pcategory;
-use App\Repositories\Interfaces\RepositoryInterface;
+use App\Repositories\Interfaces\PortfolioRepositoryInterface;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 
-class PortfolioRepository implements RepositoryInterface{
+class PortfolioRepository implements PortfolioRepositoryInterface {
 
     private $portfolio;
     private $pcategory;
@@ -57,20 +55,20 @@ class PortfolioRepository implements RepositoryInterface{
         DB::commit();
     }
 
-    public function show($id)
+    public function show()
     {
         //
     }
 
-    public function edit($id)
+    public function edit($portfolio)
     {
-        return $this->portfolio->findOrFail($id);
+        return $this->portfolio->findOrFail($portfolio);
     }
 
-    public function update($request,$id)
+    public function update($request,$portfolio)
     {
         DB::beginTransaction();
-        $portfolio = $this->portfolio->findOrFail($id);
+        $portfolio = $this->portfolio->findOrFail($portfolio);
         $slug = $request->en_name;
         $data = [
             'slug' => $slug,
@@ -94,9 +92,9 @@ class PortfolioRepository implements RepositoryInterface{
         DB::commit ();
     }
 
-    public function destroy ($id)
+    public function destroy ($portfolio)
     {
-        $portfolio = $this->portfolio->findOrFail ($id);
+        $portfolio = $this->portfolio->findOrFail ($portfolio);
         $portfolio->delete ();
     }
 

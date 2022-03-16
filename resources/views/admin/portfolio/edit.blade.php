@@ -1,55 +1,11 @@
 @extends('layouts.admin')
 
 @section('styles')
-@section('styles')
-    <style>
-        .picture-container {
-            position: relative;
-            cursor: pointer;
-            text-align: center;
-        }
 
-        .picture {
-            /* width: 800px; */
-            height: 400px;
-            background-color: #999999;
-            border: 4px solid #CCCCCC;
-            color: #FFFFFF;
-            /* border-radius: 50%; */
-            margin: 5px auto;
-            overflow: hidden;
-            transition: all 0.2s;
-            -webkit-transition: all 0.2s;
-        }
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-        .picture:hover {
-            border-color: #2ca8ff;
-        }
-
-        .picture input[type="file"] {
-            cursor: pointer;
-            display: block;
-            height: 100%;
-            left: 0;
-            opacity: 0 !important;
-            position: absolute;
-            top: 0;
-            width: 100%;
-        }
-
-        .picture-src {
-            width: 100%;
-            height: 100%;
-        }
-
-        .image {
-            display: flex;
-            margin: auto;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
 @endsection
+
 @section('content')
 
     @if (session('error'))
@@ -58,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('portfolios.update',$portfolio->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('portfolios.update',$portfolio) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -119,23 +75,22 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-link bg-aqua-active" id="englishLink"><a class="text-decoration-none"
-                                                                        href="#english-form" role="tab"
-                                                                        data-toggle="tab">{{__('portfolio.english')}}</a>
+        <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#english">{{__('portfolio.english')}}</a>
                 </li>
-                <li class="nav-link" id="arabicLink"><a class="text-decoration-none" href="#arabic-form" role="tab"
-                                                        data-toggle="tab">{{__('portfolio.arabic')}}</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#arabic">{{__('portfolio.arabic')}}</a>
+                </li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <div class="card-body tab-pane active" id="english-form">
+                <div id="english" class="container tab-pane active"><br>
                     {{-- name --}}
                     <div class="form-group col-sm-7">
-                        <label class="required" for="en_name">{{__('portfolio.Name english')}}</label>
+                        <label class="required" for="en_name">{{__('portfolio.name')}}</label>
                         <input class="form-control {{ $errors->has('en_name') ? 'is-invalid' : '' }}" type="text"
                                name="en_name" id="en_name" value="{{ $portfolio->getAttribute('name:en') }}" required>
                         @if($errors->has('en_name'))
@@ -146,7 +101,7 @@
                     </div>
                     {{-- client --}}
                     <div class="form-group col-sm-7">
-                        <label class="required" for="en_client">{{__('portfolio.Client english')}}</label>
+                        <label class="required" for="en_client">{{__('portfolio.client')}}</label>
                         <input class="form-control {{ $errors->has('en_client') ? 'is-invalid' : '' }}" type="text"
                                name="en_client" id="en_client" value="{{ $portfolio->getAttribute('client:en') }}"
                                required>
@@ -158,7 +113,7 @@
                     </div>
                     {{-- desc --}}
                     <div class="form-group col-sm-7">
-                        <label class="required" for="en_desc">{{__('portfolio.Desc english')}}</label>
+                        <label class="required" for="en_desc">{{__('portfolio.desc')}}</label>
                         <input class="form-control {{ $errors->has('en_desc') ? 'is-invalid' : '' }}" type="text"
                                name="en_desc" id="en_desc" value="{{ $portfolio->getAttribute('desc:en') }}" required>
                         @if($errors->has('en_desc'))
@@ -168,10 +123,10 @@
                         @endif
                     </div>
                 </div>
-                <div class="card-body tab-pane" id="arabic-form">
+                <div id="arabic" class="container tab-pane fade"><br>
                     {{-- name --}}
                     <div class="form-group col-sm-7">
-                        <label class="required" for="title">{{__('portfolio.Name arabic')}}</label>
+                        <label class="required" for="title">{{__('portfolio.name')}}</label>
                         <input class="form-control {{ $errors->has('ar_name') ? 'is-invalid' : '' }}" type="text"
                                name="ar_name" id="ar_name" value="{{ $portfolio->getAttribute('name:ar') }}" required>
                         @if($errors->has('ar_name'))
@@ -182,8 +137,7 @@
                     </div>
                     {{-- client --}}
                     <div class="form-group col-sm-7">
-                        <label class="required" for="title">{{__('portfolio.Client arabic')}}</label>
-
+                        <label class="required" for="title">{{__('portfolio.client')}}</label>
                         <input class="form-control {{ $errors->has('ar_client') ? 'is-invalid' : '' }}" type="text"
                                name="ar_client" id="ar_client" value="{{ $portfolio->getAttribute('client:ar') }}"
                                required>
@@ -195,7 +149,7 @@
                     </div>
                     {{-- desc --}}
                     <div class="form-group col-sm-7">
-                        <label class="required" for="title">{{__('portfolio.Desc arabic')}}</label>
+                        <label class="required" for="title">{{__('portfolio.desc')}}</label>
                         <input class="form-control {{ $errors->has('ar_desc') ? 'is-invalid' : '' }}" type="text"
                                name="ar_desc" id="ar_desc" value="{{ $portfolio->getAttribute('desc:ar') }}" required>
                         @if($errors->has('ar_desc'))
@@ -206,9 +160,8 @@
                     </div>
                 </div>
             </div>
-
             {{--  category  --}}
-            <div class="form-group ml-3">
+            <div class="form-group ml-4">
 
                 <label for="category" class="col-sm-2 col-form-label">{{ __('portfolio.category') }}</label>
 
@@ -230,7 +183,7 @@
 
             </div>
 
-            <div class="form-group ml-3">
+            <div class="form-group ml-4">
 
                 <label for="link" class="col-sm-2 col-form-label">{{ __('portfolio.link') }}</label>
 
@@ -247,7 +200,7 @@
 
             </div>
 
-            <div class="form-group ml-3">
+            <div class="form-group ml-4">
 
                 <label for="date" class="col-sm-2 col-form-label">{{ __('portfolio.Project date') }}</label>
 
@@ -264,7 +217,7 @@
 
             </div>
 
-            <div class="form-group ml-3">
+            <div class="form-group ml-4">
 
                 <div class="col-sm-3">
 

@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 
+@section('styles')
+
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+@endsection
+
 @section('content')
 
 @if (session('error'))

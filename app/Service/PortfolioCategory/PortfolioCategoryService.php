@@ -23,15 +23,15 @@ class PortfolioCategoryService
         return $this->pcategoryRepository->show($id);
     }
 
-    public function edit($id){
-        return $this->pcategoryRepository->edit($id);
+    public function edit($portfolioCategory){
+        return $this->pcategoryRepository->edit($portfolioCategory);
     }
 
-    public function update($request,$id){
-        return $this->pcategoryRepository->update($request,$id);
+    public function update($request,$portfolioCategory){
+        return $this->pcategoryRepository->update($request,$portfolioCategory);
     }
 
-    public function destroy($id){
-        return $this->pcategoryRepository->destroy($id);
+    public function destroy($portfolioCategory){
+        return $this->pcategoryRepository->destroy($portfolioCategory);
     }
 }

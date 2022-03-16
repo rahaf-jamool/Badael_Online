@@ -34,7 +34,7 @@ class UserRepository implements UserRepositoryInterface{
     {
         DB::beginTransaction();
 
-        $user= $this->user->create([
+        $users= $this->user->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' =>Hash::make($request->password)
@@ -55,11 +55,11 @@ class UserRepository implements UserRepositoryInterface{
 
     public function update(Request $request, $id)
     {
-        $users= $this->user->find($id);
+        $user= $this->user->find($id);
 
         DB::beginTransaction();
 
-        $users->where('users.id',$id)->update([
+        $user->where('users.id',$id)->update([
             'name' => $request->name,
             'email' => $request->email,
             'password' =>Hash::make($request->password)

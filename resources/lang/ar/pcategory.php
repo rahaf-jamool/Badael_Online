@@ -24,8 +24,8 @@ return [
 
     // create
     'Scover' => 'حدد الغلاف',
-    'Narabic' => 'الاسم بالعربي',
-    'Nenglish' => 'الاسم بالاجنبي',
+    'Name arabic' => 'الاسم بالعربي',
+    'Name english' => 'الاسم بالاجنبي',
     'create' => 'إنشاء',
 
     //update

@@ -82,9 +82,9 @@
 
                         <td>
 
-                            <a href="{{route('portfolios.edit', [$portfolio->id])}}" class="btn btn-info btn-sm"> {{ __('portfolio.edit') }} </a>
+                            <a href="{{route('portfolios.edit', [$portfolio])}}" class="btn btn-info btn-sm"> {{ __('portfolio.edit') }} </a>
 
-                            <form method="POST" action="{{route('portfolios.destroy', [$portfolio->id])}}" class="d-inline" onsubmit="return confirm('Delete this portfolio permanently?')">
+                            <form method="POST" action="{{route('portfolios.destroy', [$portfolio])}}" class="d-inline" onsubmit="return confirm('Delete this portfolio permanently?')">
 
                                 @csrf
                                 @method('DELETE')

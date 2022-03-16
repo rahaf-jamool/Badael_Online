@@ -25,19 +25,18 @@ class PortfolioService
         return $this->portfolioRepository->store($request);
     }
 
-    public function show($id){
-        return $this->portfolioRepository->show($id);
+    public function show(){
     }
 
-    public function edit($id){
-        return $this->portfolioRepository->edit($id);
+    public function edit($portfolio){
+        return $this->portfolioRepository->edit($portfolio);
     }
 
-    public function update($request,$id){
-        return $this->portfolioRepository->update($request,$id);
+    public function update($request,$portfolio){
+        return $this->portfolioRepository->update($request,$portfolio);
     }
 
-    public function destroy($id){
-        return $this->portfolioRepository->destroy($id);
+    public function destroy($portfolio){
+        return $this->portfolioRepository->destroy($portfolio);
     }
 }

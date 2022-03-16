@@ -24,8 +24,8 @@ return [
 
     // create
     'Scover' => 'Select cover',
-    'Narabic' => 'Name Arabic',
-    'Nenglish' => 'Name English',
+    'Name arabic' => 'Name Arabic',
+    'Name english' => 'Name English',
     'create' => 'Create',
 
     //update

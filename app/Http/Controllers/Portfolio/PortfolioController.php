@@ -38,19 +38,18 @@ class PortfolioController extends Controller
         }
     }
 
-    public function show($id){
-        return $this->portfolioService->show($id);
+    public function show(){
     }
 
-    public function edit($id){
-        $portfolio = $this->portfolioService->edit($id);
+    public function edit($portfolio){
+        $portfolio = $this->portfolioService->edit($portfolio);
         $categories = $this->portfolioService->create();
         return view('admin.portfolio.edit',compact('portfolio','categories'));
     }
 
-    public function update(PortfolioRequest $request,$id){
+    public function update(PortfolioRequest $request,$portfolio){
         try{
-            $this->portfolioService->update($request,$id);
+            $this->portfolioService->update($request,$portfolio);
             return $this->SuccessMessage('portfolios.index',' updated' );
         }catch(\Exception $ex){
             DB::rollback();
@@ -58,9 +57,9 @@ class PortfolioController extends Controller
         }
     }
 
-    public function destroy($id){
+    public function destroy($portfolio){
         try{
-            $this->portfolioService->destroy($id);
+            $this->portfolioService->destroy($portfolio);
             return $this->SuccessMessage('portfolios.index',' deleted' );
 
         }catch(\Exception $ex){

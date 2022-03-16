@@ -32,12 +32,8 @@ return [
     'category' => 'الفئات',
     'Choose one' => 'اختر واحدة !',
     'link' => 'الرابط',
-    'Name arabic' => 'الاسم بالعربي',
-    'Name english' => 'الاسم بالاجنبي',
-    'Client arabic' => 'العميل بالعربي',
-    'Client english' => 'العميل بالاجنبي',
-    'Desc arabic' => 'الوصف بالعربي',
-    'Desc english' => 'الوصف بالاجنبي',
+    'client' => 'العميل',
+    'desc' => 'الوصف',
     'create' => 'إضافة',
 
     //update

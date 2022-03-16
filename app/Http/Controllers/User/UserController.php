@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-// use App\Http\Requests\User\UserRequest;
 use App\Service\User\UserService;
-use App\Models\User\User;
 use Illuminate\Http\Request;
-use App\Models\Role;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use App\Traits\GeneralTrait;
 
 class UserController extends Controller
 {
+    use GeneralTrait;
     private $userService;
     public function __construct(UserService $userService)
     {
@@ -43,12 +41,11 @@ class UserController extends Controller
         try{
             $this->userService->store($request);
 
-            return redirect()->route('admin.user')->with('success', 'Data added successfully');
+            return $this->SuccessMessage('admin.user',' added' );
 
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.user.create')->with('error', 'Data failed to add');
+            return $this->ErrorMessage('admin.user.create', $ex->getMessage());
         }
     }
 
@@ -66,36 +63,30 @@ class UserController extends Controller
     public function update(Request $request, $id){
         try{
             $this->userService->update($request, $id);
-
-            return redirect()->route('admin.user')->with('success', 'Data updated successfully');
+            return $this->SuccessMessage('admin.user',' updated' );
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.user.edit')->with('error', 'Data failed to update');
+            return $this->ErrorMessage('admin.user.edit', $ex->getMessage());
         }
     }
 
     public function changepassword(Request $request, $id){
         try{
             $this->userService->changepassword($request,$id);
-            return redirect()->route('admin.user')->with('success', 'Password updated successfully');
-
+            return $this->SuccessMessage('admin.user',' updated' );
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.user')->with('error', 'Password failed to update');
+            return $this->ErrorMessage('admin.user', $ex->getMessage());
         }
     }
 
     public function destroy($id){
         try{
             $this->userService->destroy($id);
-            return redirect()->route('admin.user')->with('success', 'Data deleted successfully');
-
+            return $this->SuccessMessage('admin.user',' deleted' );
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.user')->with('error', 'Data deleted failed');
+            return $this->ErrorMessage('admin.user', $ex->getMessage());
         }
     }
 }

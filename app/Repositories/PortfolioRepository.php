@@ -109,6 +109,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface {
 
     public function UpdateUploadImage ($image,$path)
     {
+        //image
         if($image && file_exists(storage_path('app/public/' .$image))){
             Storage::delete('public/'. $image);
         }
